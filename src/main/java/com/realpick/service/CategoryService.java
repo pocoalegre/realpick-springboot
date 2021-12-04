@@ -21,11 +21,14 @@ public interface CategoryService extends IService<Category> {
     ResultVO modifyCategory(Category category);
 
     //商品类型列表
-    ResultVO categoryList(String queryLevel, String queryInfo, Integer pageNum, Integer pageSize);
+    ResultVO categoryList(String queryLevel, String queryType, String queryInfo, Integer pageNum, Integer pageSize);
 
     //删除商品类型
     ResultVO deleteCategory(Integer id);
 
     //单条查询
     ResultVO categoryById(Integer id);
+
+    //首页类型展示
+    ResultVO categoryIndexList();
 }

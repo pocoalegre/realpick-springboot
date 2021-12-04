@@ -112,5 +112,11 @@ public class BannerController {
     public ResultVO byId(@RequestParam("id") Integer id){
         return bannerService.bannerById(id);
     }
+
+    @ApiOperation("首页展示列表接口")
+    @GetMapping("/indexList")
+    public ResultVO indexList() {
+        return bannerService.bannerIndexList();
+    }
 }
 

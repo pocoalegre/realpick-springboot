@@ -29,4 +29,7 @@ public interface BannerService extends IService<Banner> {
     //单条banner
     ResultVO bannerById(Integer id);
 
+    //首页banner展示
+    ResultVO bannerIndexList();
+
 }

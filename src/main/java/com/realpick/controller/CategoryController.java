@@ -39,10 +39,12 @@ public class CategoryController {
 
         //json对象转换
         Category categoryByJson = JSON.parseObject(category, Category.class);
-
-        //非空字段
         if (file == null){
-            return new ResultVO(StatusCode.NO, "必须上传图片！", null);
+            if (categoryByJson.getCategoryLevel() == 1){
+                return new ResultVO(StatusCode.NO, "必须上传图片！", null);
+            }else {
+                return categoryService.addCategory(categoryByJson);
+            }
         }else {
 
             //上传文件
@@ -84,16 +86,18 @@ public class CategoryController {
     @ApiOperation("条件查询分页列表接口")
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "string", name = "queryLevel", value = "商品类型等级"),
-            @ApiImplicitParam(dataType = "string", name = "queryInfo", value = "查询商品类型名"),
+            @ApiImplicitParam(dataType = "string", name = "queryType", value = "查询类型"),
+            @ApiImplicitParam(dataType = "string", name = "queryInfo", value = "查询内容"),
             @ApiImplicitParam(dataType = "int", name = "pageNum", value = "页码", required = true),
             @ApiImplicitParam(dataType = "int", name = "pageSize", value = "当前页码数据条数", required = true)
     })
     @GetMapping("/list")
     public ResultVO list(@RequestParam("queryLevel") String queryLevel,
+                         @RequestParam("queryType") String queryType,
                          @RequestParam("queryInfo") String queryInfo,
                          @RequestParam("pageNum") Integer pageNum,
                          @RequestParam("pageSize") Integer pageSize) {
-        return categoryService.categoryList(queryLevel, queryInfo, pageNum, pageSize);
+        return categoryService.categoryList(queryLevel, queryType, queryInfo, pageNum, pageSize);
     }
 
     @ApiOperation("删除接口")
@@ -112,6 +116,12 @@ public class CategoryController {
     @GetMapping("/byId")
     public ResultVO byId(Integer id){
         return categoryService.categoryById(id);
+    }
+
+    @ApiOperation("首页展示列表接口")
+    @GetMapping("/indexList")
+    public ResultVO indexList() {
+        return categoryService.categoryIndexList();
     }
 }
 

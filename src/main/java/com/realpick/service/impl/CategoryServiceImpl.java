@@ -1,13 +1,12 @@
 package com.realpick.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.realpick.entity.Banner;
-import com.realpick.entity.Category;
 import com.realpick.dao.CategoryMapper;
+import com.realpick.entity.Category;
 import com.realpick.service.CategoryService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.realpick.vo.ResultVO;
 import com.realpick.vo.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +86,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     @Override
-    public ResultVO categoryList(String queryLevel, String queryInfo, Integer pageNum, Integer pageSize) {
+    public ResultVO categoryList(String queryLevel, String queryType, String queryInfo, Integer pageNum, Integer pageSize) {
 
         //分页设置
         PageHelper.startPage(pageNum, pageSize);
@@ -99,8 +98,21 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         if (!queryLevel.equals("")){
             qw.eq("category_level", Integer.valueOf(queryLevel));
         }
-        if (!queryInfo.equals("")){
-            qw.like("category_name", queryInfo);
+        if (!queryType.equals("")){
+            if (queryType.equals("parent_id")){
+                if (!queryInfo.equals("")){
+                    try {
+                        qw.eq(queryType, Integer.valueOf(queryInfo));
+                    }catch (Exception e){
+                        System.out.println(e);
+                        return new ResultVO(StatusCode.NO, "请输入合法的编号！", null);
+                    }
+                }
+            }else {
+                if (!queryInfo.equals("")){
+                    qw.like(queryType, queryInfo);
+                }
+            }
         }
 
         //查询列表并分页
@@ -132,6 +144,23 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         }catch (Exception e){
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取信息失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO categoryIndexList() {
+
+        //查询列表
+        try {
+            //一级类型前5个查询
+            QueryWrapper<Category> qw = new QueryWrapper<>();
+            qw.last("limit 5");
+
+            List<Category> categoryList = categoryMapper.selectList(qw);
+            return new ResultVO(StatusCode.OK, "获取列表成功！", categoryList);
+        }catch (Exception e){
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }
     }
 }

@@ -123,6 +123,22 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }
+    }
 
+    @Override
+    public ResultVO bannerIndexList() {
+
+        //查询列表
+        try {
+            //按照banner顺序查询
+            QueryWrapper<Banner> qw = new QueryWrapper<>();
+            qw.orderByAsc("banner_seq");
+
+            List<Banner> bannerList = bannerMapper.selectList(qw);
+            return new ResultVO(StatusCode.OK, "获取列表成功！", bannerList);
+        }catch (Exception e){
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取列表失败！", null);
+        }
     }
 }
