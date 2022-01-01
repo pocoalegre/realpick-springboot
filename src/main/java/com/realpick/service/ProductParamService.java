@@ -28,4 +28,7 @@ public interface ProductParamService extends IService<ProductParam> {
 
     //添加商品参数
     ResultVO addProductParam(ProductParam productParam);
+
+    //查询单件商品参数
+    ResultVO productParamByProductId(Integer id);
 }

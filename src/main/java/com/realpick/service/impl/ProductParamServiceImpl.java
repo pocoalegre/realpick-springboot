@@ -8,6 +8,7 @@ import com.realpick.dao.ProductMapper;
 import com.realpick.dao.ProductParamMapper;
 import com.realpick.entity.Product;
 import com.realpick.entity.ProductParam;
+import com.realpick.entity.ProductSku;
 import com.realpick.service.ProductParamService;
 import com.realpick.vo.ResultVO;
 import com.realpick.vo.StatusCode;
@@ -117,6 +118,21 @@ public class ProductParamServiceImpl extends ServiceImpl<ProductParamMapper, Pro
             }else {
                 return new ResultVO(StatusCode.NO, "添加失败！", null);
             }
+        }
+    }
+
+    @Override
+    public ResultVO productParamByProductId(Integer id) {
+
+        //查询单条商品参数信息
+        HashMap<String, Object> columnMap = new HashMap<>();
+        columnMap.put("product_id", id);
+        try {
+            List<ProductParam> productParamList = productParamMapper.selectByMap(columnMap);
+            return new ResultVO(StatusCode.OK, "获取列表成功！", productParamList);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }
     }
 }

@@ -30,4 +30,7 @@ public interface ProductSkuService extends IService<ProductSku> {
     //添加商品sku
     ResultVO addProductSku(ProductSku productSku);
 
+    //查询单件商品sku
+    ResultVO productSkuByProductId(Integer id);
+
 }

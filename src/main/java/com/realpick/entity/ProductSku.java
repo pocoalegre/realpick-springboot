@@ -41,12 +41,6 @@ public class ProductSku implements Serializable {
     @ApiModelProperty(value = "颜色图片")
     private String colorImg;
 
-    @ApiModelProperty(value = "售价")
-    private BigDecimal sellPrice;
-
-    @ApiModelProperty(value = "库存")
-    private Integer stock;
-
     @ApiModelProperty(value = "删除状态（0：非，1：是）")
     @TableLogic
     private Integer deleted;

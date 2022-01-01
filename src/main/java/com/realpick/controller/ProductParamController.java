@@ -71,5 +71,14 @@ public class ProductParamController {
     public ResultVO add(@RequestBody ProductParam productParam){
         return productParamService.addProductParam(productParam);
     }
+
+    @ApiOperation("查询单条商品参数")
+    @GetMapping("/byProductId")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)
+    })
+    public ResultVO byProductId(Integer id){
+        return productParamService.productParamByProductId(id);
+    }
 }
 

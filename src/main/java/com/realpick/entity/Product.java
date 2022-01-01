@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -28,8 +29,14 @@ public class Product implements Serializable {
     @TableId(value = "product_id", type = IdType.AUTO)
     private Integer productId;
 
+    @ApiModelProperty(value = "商品图片")
+    private String productImg;
+
     @ApiModelProperty(value = "商品名")
     private String productName;
+
+    @ApiModelProperty(value = "商品价格")
+    private BigDecimal productPrice;
 
     @ApiModelProperty(value = "商品类型id")
     private Integer categoryId;
@@ -37,8 +44,8 @@ public class Product implements Serializable {
     @ApiModelProperty(value = "商品品牌")
     private String productBrand;
 
-    @ApiModelProperty(value = "商品描述")
-    private String productDesc;
+    @ApiModelProperty(value = "商品库存")
+    private Integer productStock;
 
     @ApiModelProperty(value = "商品销量")
     private Integer productSales;

@@ -2,7 +2,6 @@ package com.realpick.controller;
 
 
 import com.alibaba.fastjson.JSON;
-import com.realpick.entity.ProductImg;
 import com.realpick.entity.ProductSku;
 import com.realpick.service.ProductSkuService;
 import com.realpick.utils.FileManage;
@@ -43,7 +42,7 @@ public class ProductSkuController {
     @GetMapping("/list")
     public ResultVO list(@RequestParam("queryProductId") String queryProductId,
                          @RequestParam("pageNum") Integer pageNum,
-                         @RequestParam("pageSize")Integer pageSize) {
+                         @RequestParam("pageSize") Integer pageSize) {
         return productSkuService.productSkuList(queryProductId, pageNum, pageSize);
     }
 
@@ -82,7 +81,7 @@ public class ProductSkuController {
             if (saveResultVO.getCode() == 10000){
                 productSkuByJson.setColorImg((String) saveResultVO.getData());
 
-                //添加商品图片
+                //添加sku图片
                 return productSkuService.modifyProductSku(productSkuByJson);
             }else {
                 return saveResultVO;
@@ -105,15 +104,23 @@ public class ProductSkuController {
             //上传文件
             ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/product/sku");
             if (saveResultVO.getCode() == 10000){
-                System.out.println(productSkuByJson);
                 productSkuByJson.setColorImg((String) saveResultVO.getData());
 
-                //添加商品图片
+                //添加sku图片
                 return productSkuService.addProductSku(productSkuByJson);
             }else {
                 return saveResultVO;
             }
         }
+    }
+
+    @ApiOperation("查询单条商品sku")
+    @GetMapping("/byProductId")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)
+    })
+    public ResultVO byProductId(Integer id){
+        return productSkuService.productSkuByProductId(id);
     }
 }
 

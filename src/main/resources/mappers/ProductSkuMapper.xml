@@ -9,8 +9,6 @@
         <result column="sku_size" property="skuSize" />
         <result column="sku_color" property="skuColor" />
         <result column="color_img" property="colorImg" />
-        <result column="sell_price" property="sellPrice" />
-        <result column="stock" property="stock" />
         <result column="deleted" property="deleted" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />

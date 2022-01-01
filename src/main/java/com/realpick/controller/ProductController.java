@@ -1,15 +1,19 @@
 package com.realpick.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.realpick.entity.Product;
 import com.realpick.service.ProductService;
+import com.realpick.utils.FileManage;
 import com.realpick.vo.ResultVO;
+import com.realpick.vo.StatusCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -40,7 +44,7 @@ public class ProductController {
     public ResultVO list(@RequestParam("queryType") String queryType,
                          @RequestParam("queryInfo") String queryInfo,
                          @RequestParam("pageNum") Integer pageNum,
-                         @RequestParam("pageSize")Integer pageSize) {
+                         @RequestParam("pageSize") Integer pageSize) {
         return productService.productList(queryType, queryInfo, pageNum, pageSize);
     }
 
@@ -64,14 +68,77 @@ public class ProductController {
 
     @ApiOperation("修改接口")
     @PutMapping("/modify")
-    public ResultVO modify(@RequestBody Product product){
-        return productService.modifyProduct(product);
+    public ResultVO modify(MultipartFile file, String product){
+        
+        //json对象转换
+        Product productByJson = JSON.parseObject(product, Product.class);
+
+        //非空字段
+        if (file == null){
+            return productService.modifyProduct(productByJson);
+        }else {
+
+            //上传文件
+            ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/product/img");
+            if (saveResultVO.getCode() == 10000){
+                productByJson.setProductImg((String) saveResultVO.getData());
+
+                //添加商品图片
+                return productService.modifyProduct(productByJson);
+            }else {
+                return saveResultVO;
+            }
+        }
     }
 
     @ApiOperation("添加接口")
     @PostMapping("/add")
-    public ResultVO add(@RequestBody Product product){
-        return productService.addProduct(product);
+    public ResultVO add(MultipartFile file, String product){
+        
+        //json对象转换
+        Product productByJson = JSON.parseObject(product, Product.class);
+
+        //非空字段
+        if (file == null){
+            return new ResultVO(StatusCode.NO, "必须上传图片！", null);
+        }else {
+
+            //上传文件
+            ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/product/img");
+            if (saveResultVO.getCode() == 10000){
+                productByJson.setProductImg((String) saveResultVO.getData());
+
+                //添加商品图片
+                return productService.addProduct(productByJson);
+            }else {
+                return saveResultVO;
+            }
+        }
+    }
+
+    @ApiOperation("首页列表接口")
+    @GetMapping("/indexList")
+    public ResultVO indexList() {
+        return productService.productIndexList();
+    }
+
+    @ApiOperation("分类列表接口")
+    @GetMapping("/listByCategory")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "pageNum", value = "页码", required = true),
+            @ApiImplicitParam(dataType = "int", name = "pageSize", value = "当前页码数据条数", required = true)
+    })
+    public ResultVO listByCategory(@RequestParam("pageNum") Integer pageNum,
+                                   @RequestParam("pageSize") Integer pageSize) {
+        return productService.productListByCategory(pageNum, pageSize);
+    }
+
+    @ApiOperation("商品VO接口")
+    @GetMapping("/voById")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)})
+    public ResultVO voById(Integer id){
+        return productService.productVOById(id);
     }
 }
 

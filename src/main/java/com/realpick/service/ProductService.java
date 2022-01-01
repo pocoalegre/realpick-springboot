@@ -29,4 +29,13 @@ public interface ProductService extends IService<Product> {
     //添加商品
     ResultVO addProduct(Product product);
 
+    //首页商品展示
+    ResultVO productIndexList();
+
+    //商品分类展示
+    ResultVO productListByCategory(Integer pageNum, Integer pageSize);
+
+    //商品VO
+    ResultVO productVOById(Integer id);
+
 }

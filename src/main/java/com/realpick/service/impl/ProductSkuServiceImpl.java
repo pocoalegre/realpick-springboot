@@ -3,10 +3,8 @@ package com.realpick.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.realpick.dao.ProductImgMapper;
 import com.realpick.dao.ProductMapper;
 import com.realpick.entity.Product;
-import com.realpick.entity.ProductImg;
 import com.realpick.entity.ProductSku;
 import com.realpick.dao.ProductSkuMapper;
 import com.realpick.service.ProductSkuService;
@@ -119,6 +117,21 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
             }else {
                 return new ResultVO(StatusCode.NO, "添加失败！", null);
             }
+        }
+    }
+
+    @Override
+    public ResultVO productSkuByProductId(Integer id) {
+
+        //查询单条商品sku信息
+        HashMap<String, Object> columnMap = new HashMap<>();
+        columnMap.put("product_id", id);
+        try {
+            List<ProductSku> productSkuList = productSkuMapper.selectByMap(columnMap);
+            return new ResultVO(StatusCode.OK, "获取列表成功！", productSkuList);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }
     }
 }

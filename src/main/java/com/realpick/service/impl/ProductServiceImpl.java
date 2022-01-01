@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.realpick.dao.*;
 import com.realpick.entity.Category;
 import com.realpick.entity.Product;
+import com.realpick.entity.ProductVO;
 import com.realpick.service.ProductService;
 import com.realpick.vo.ResultVO;
 import com.realpick.vo.StatusCode;
@@ -29,9 +30,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     @Autowired
     private ProductMapper productMapper;
-
-    @Autowired
-    private ProductImgMapper productImgMapper;
 
     @Autowired
     private ProductParamMapper productParamMapper;
@@ -99,7 +97,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
         //删除商品相关信息
         try {
-            productImgMapper.deleteByMap(columnMap);
             productParamMapper.deleteByMap(columnMap);
             productSkuMapper.deleteByMap(columnMap);
             int delete = productMapper.deleteById(id);
@@ -153,6 +150,51 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             }else {
                 return new ResultVO(StatusCode.NO, "添加失败！", null);
             }
+        }
+    }
+
+    @Override
+    public ResultVO productIndexList() {
+
+        //查询列表
+        try {
+            //前10个
+            QueryWrapper<Product> qw = new QueryWrapper<>();
+            qw.last("limit 10");
+
+            List<Product> productList = productMapper.selectList(qw);
+            return new ResultVO(StatusCode.OK, "获取列表成功！", productList);
+        }catch (Exception e){
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取列表失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO productListByCategory(Integer pageNum, Integer pageSize) {
+
+        //分页设置
+        PageHelper.startPage(pageNum, pageSize);
+
+        //查询列表并分页
+        try {
+            List<Product> productList = productMapper.selectList(null);
+            PageInfo<Product> productPageInfo = new PageInfo<>(productList);
+            return new ResultVO(StatusCode.OK, "获取列表成功！", productPageInfo);
+        }catch (Exception e){
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取列表失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO productVOById(Integer id) {
+        try {
+            ProductVO productVO = productMapper.productVO(id);
+            return new ResultVO(StatusCode.OK, "获取信息成功！", productVO);
+        }catch (Exception e){
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }
     }
 }
