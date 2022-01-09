@@ -55,7 +55,7 @@ public class AdminsController {
     })
     @PostMapping("/regist")
     public ResultVO regist(@RequestParam("name") String name,
-                           @RequestParam("pwd") String pwd){
+                           @RequestParam("pwd") String pwd) {
         return adminsService.adminRegist(name, pwd);
     }
 
@@ -72,7 +72,7 @@ public class AdminsController {
         BufferedImage image = defaultKaptcha.createImage(text);
 
         // 使用redis缓存验证码的值，并设置过期时间为60秒
-        redisTemplate.opsForValue().set("imgCode",text,60, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set("imgCode", text, 60, TimeUnit.SECONDS);
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(image, "jpg", out);
         out.flush();
@@ -88,15 +88,15 @@ public class AdminsController {
     @GetMapping("/login")
     public ResultVO login(@RequestParam("name") String name,
                           @RequestParam("pwd") String pwd,
-                          @RequestParam("code") String verificationCode){
+                          @RequestParam("code") String verificationCode) {
         //判断时效
-        if(!redisTemplate.hasKey("imgCode")) {
+        if (!redisTemplate.hasKey("imgCode")) {
             return new ResultVO(StatusCode.NO, "验证码已过期！", null);
         }
 
         //判断输入，成功则进行账号密码判断
         String code = redisTemplate.opsForValue().get("imgCode").toString();
-        if(StringUtils.equals(verificationCode,code)) {
+        if (StringUtils.equals(verificationCode, code)) {
             return adminsService.adminLogin(name, pwd);
         } else {
             return new ResultVO(StatusCode.NO, "验证码输入错误！", null);
@@ -108,13 +108,13 @@ public class AdminsController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "管理员id", required = true)
     )
     @GetMapping("/byId")
-    public ResultVO byId(@RequestParam("id") Integer id){
+    public ResultVO byId(@RequestParam("id") Integer id) {
         return adminsService.adminListById(id);
     }
 
     @ApiOperation("修改信息接口")
     @PutMapping("/modify")
-    public ResultVO modify(@RequestBody Admins admin){
+    public ResultVO modify(@RequestBody Admins admin) {
         return adminsService.adminModify(admin);
     }
 
@@ -127,7 +127,7 @@ public class AdminsController {
     @PutMapping("/pwdModify")
     public ResultVO pwdModify(@RequestParam("id") Integer id,
                               @RequestParam("pwd") String pwd,
-                              @RequestParam("newPwd") String newPwd){
+                              @RequestParam("newPwd") String newPwd) {
         return adminsService.adminPwdModify(id, pwd, newPwd);
     }
 
@@ -142,7 +142,7 @@ public class AdminsController {
     public ResultVO list(@RequestParam("queryType") String queryType,
                          @RequestParam("queryInfo") String queryInfo,
                          @RequestParam("pageNum") Integer pageNum,
-                         @RequestParam("pageSize")Integer pageSize){
+                         @RequestParam("pageSize") Integer pageSize) {
         return adminsService.adminList(queryType, queryInfo, pageNum, pageSize);
     }
 
@@ -151,17 +151,17 @@ public class AdminsController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "管理员id", required = true)
     })
     @DeleteMapping("/delete")
-    public ResultVO delete(@RequestParam("id") Integer id){
+    public ResultVO delete(@RequestParam("id") Integer id) {
         return adminsService.adminDelete(id);
     }
 
     @ApiOperation("更改头像接口")
     @PutMapping("/uploadImg")
-    public ResultVO uploadImg(MultipartFile file, Integer id){
+    public ResultVO uploadImg(MultipartFile file, Integer id) {
         ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/adminHead");
-        if (saveResultVO.getCode() == 10000){
+        if (saveResultVO.getCode() == 10000) {
             return adminsService.adminImgModify(id, (String) saveResultVO.getData());
-        }else {
+        } else {
             return saveResultVO;
         }
     }

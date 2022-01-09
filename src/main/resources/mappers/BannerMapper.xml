@@ -4,15 +4,15 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.realpick.entity.Banner">
-        <id column="banner_id" property="bannerId" />
-        <result column="banner_img" property="bannerImg" />
-        <result column="banner_seq" property="bannerSeq" />
-        <result column="banner_type" property="bannerType" />
-        <result column="product_id" property="productId" />
-        <result column="category_id" property="categoryId" />
-        <result column="deleted" property="deleted" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="banner_id" property="bannerId"/>
+        <result column="banner_img" property="bannerImg"/>
+        <result column="banner_seq" property="bannerSeq"/>
+        <result column="banner_type" property="bannerType"/>
+        <result column="product_id" property="productId"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="deleted" property="deleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
 </mapper>

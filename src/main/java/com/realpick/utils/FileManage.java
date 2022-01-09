@@ -15,10 +15,11 @@ public class FileManage {
 
     /**
      * 使用uuid给文件更名，防止重复
+     *
      * @param fileName 文件名
      * @return 更名后字符串
      */
-    public static String fileRename(String fileName){
+    public static String fileRename(String fileName) {
 
         //生成uuid
         String uuid = UUID.randomUUID().toString().replace("-", "");
@@ -30,12 +31,13 @@ public class FileManage {
 
     /**
      * 图片上传
-     * @param file 图片
+     *
+     * @param file    图片
      * @param fileDir 上传目录
      * @return 执行结果
      * @throws IOException 异常
      */
-    public static ResultVO fileUpload(MultipartFile file, String fileDir){
+    public static ResultVO fileUpload(MultipartFile file, String fileDir) {
         try {
             //图片项目路径
             String targetPath = ClassUtils.getDefaultClassLoader().getResource(fileDir).getPath();
@@ -60,10 +62,11 @@ public class FileManage {
 
     /**
      * 文件删除
+     *
      * @param FileName 文件名
-     * @param fileDir 文件目录
+     * @param fileDir  文件目录
      */
-    public static ResultVO fileDelete(String FileName, String fileDir){
+    public static ResultVO fileDelete(String FileName, String fileDir) {
 
         //文件路径
         String targetPath = ClassUtils.getDefaultClassLoader().getResource(fileDir).getPath();
@@ -74,7 +77,7 @@ public class FileManage {
         try {
             file.delete();
             return new ResultVO(StatusCode.NO, "删除成功！", null);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "删除失败！", null);
         }
@@ -83,12 +86,13 @@ public class FileManage {
 
     /**
      * 文件复制
-     * @param FileName 文件名
+     *
+     * @param FileName    文件名
      * @param fromFileDir 复制源路径
-     * @param toFileDir 复制路径
+     * @param toFileDir   复制路径
      * @return 执行结果
      */
-    public static ResultVO fileCopy(String FileName, String fromFileDir, String toFileDir){
+    public static ResultVO fileCopy(String FileName, String fromFileDir, String toFileDir) {
 
         //输入流输出流
         FileInputStream fis = null;
@@ -105,7 +109,7 @@ public class FileManage {
 
             //判定器，是否读取完毕
             int temp = 0;
-            while ((temp = fis.read()) != -1){
+            while ((temp = fis.read()) != -1) {
                 //写入
                 fos.write(temp);
             }

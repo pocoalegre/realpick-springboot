@@ -44,7 +44,7 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
         QueryWrapper<ProductSku> qw = new QueryWrapper<>();
 
         //判断是否有查询条件
-        if (!queryProductId.equals("")){
+        if (!queryProductId.equals("")) {
             qw.eq("product_id", Integer.valueOf(queryProductId));
         }
 
@@ -53,7 +53,7 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
             List<ProductSku> productSkuList = productSkuMapper.selectList(qw);
             PageInfo<ProductSku> productSkuPageInfo = new PageInfo<>(productSkuList);
             return new ResultVO(StatusCode.OK, "获取列表成功！", productSkuPageInfo);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }
@@ -64,7 +64,7 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
         try {
             ProductSku productSku = productSkuMapper.selectById(id);
             return new ResultVO(StatusCode.OK, "获取信息成功！", productSku);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }
@@ -73,28 +73,28 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
     @Override
     public ResultVO deleteProductSku(Integer id) {
         int delete = productSkuMapper.deleteById(id);
-        if (delete == 1){
+        if (delete == 1) {
             return new ResultVO(StatusCode.OK, "删除成功！", null);
-        }else {
+        } else {
             return new ResultVO(StatusCode.NO, "删除失败！", null);
         }
     }
 
     @Override
     public ResultVO modifyProductSku(ProductSku productSku) {
-        
+
         //查询是否有该商品id
         Integer productId = productSku.getProductId();
         HashMap<String, Object> columnMap = new HashMap<>();
         columnMap.put("product_id", productId);
         List<Product> productList = productMapper.selectByMap(columnMap);
-        if (productList.size() == 0){
+        if (productList.size() == 0) {
             return new ResultVO(StatusCode.NO, "该商品编号不存在！", null);
-        }else {
+        } else {
             int update = productSkuMapper.updateById(productSku);
-            if (update == 1){
+            if (update == 1) {
                 return new ResultVO(StatusCode.OK, "修改成功！", null);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "修改失败！", null);
             }
         }
@@ -102,19 +102,19 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
 
     @Override
     public ResultVO addProductSku(ProductSku productSku) {
-        
+
         //查询是否有该商品id
         Integer productId = productSku.getProductId();
         HashMap<String, Object> columnMap = new HashMap<>();
         columnMap.put("product_id", productId);
         List<Product> productList = productMapper.selectByMap(columnMap);
-        if (productList.size() == 0){
+        if (productList.size() == 0) {
             return new ResultVO(StatusCode.NO, "该商品编号不存在！", null);
-        }else {
+        } else {
             int insert = productSkuMapper.insert(productSku);
-            if (insert == 1){
+            if (insert == 1) {
                 return new ResultVO(StatusCode.OK, "添加成功！", null);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "添加失败！", null);
             }
         }

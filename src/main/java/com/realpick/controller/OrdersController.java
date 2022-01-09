@@ -40,7 +40,7 @@ public class OrdersController {
     public ResultVO list(@RequestParam("queryType") String queryType,
                          @RequestParam("queryInfo") String queryInfo,
                          @RequestParam("pageNum") Integer pageNum,
-                         @RequestParam("pageSize")Integer pageSize) {
+                         @RequestParam("pageSize") Integer pageSize) {
         return ordersService.orderList(queryType, queryInfo, pageNum, pageSize);
     }
 
@@ -49,7 +49,7 @@ public class OrdersController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "订单id", required = true)
     })
     @GetMapping("/byId")
-    public ResultVO byId(@RequestParam("id") Integer id){
+    public ResultVO byId(@RequestParam("id") Integer id) {
         return ordersService.orderById(id);
     }
 
@@ -58,13 +58,13 @@ public class OrdersController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "订单id", required = true)
     })
     @DeleteMapping("/delete")
-    public ResultVO delete(@RequestParam("id") Integer id){
+    public ResultVO delete(@RequestParam("id") Integer id) {
         return ordersService.deleteOrder(id);
     }
 
     @ApiOperation("修改接口")
     @PutMapping("/modify")
-    public ResultVO modify(@RequestBody Orders order){
+    public ResultVO modify(@RequestBody Orders order) {
         return ordersService.modifyOrder(order);
     }
 }

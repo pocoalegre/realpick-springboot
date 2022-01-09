@@ -31,13 +31,13 @@ public class DeliveryController {
 
     @ApiOperation("添加接口")
     @PostMapping("add")
-    public ResultVO add(@RequestBody Delivery delivery){
+    public ResultVO add(@RequestBody Delivery delivery) {
         return deliveryService.addDelivery(delivery);
     }
 
     @ApiOperation("修改接口")
     @PutMapping("modify")
-    public ResultVO modify(@RequestBody Delivery delivery){
+    public ResultVO modify(@RequestBody Delivery delivery) {
         return deliveryService.modifyDelivery(delivery);
     }
 
@@ -46,7 +46,7 @@ public class DeliveryController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "快递id", required = true)
     })
     @DeleteMapping("/delete")
-    public ResultVO delete(@RequestParam("id") Integer id){
+    public ResultVO delete(@RequestParam("id") Integer id) {
         return deliveryService.deleteDelivery(id);
     }
 
@@ -63,7 +63,7 @@ public class DeliveryController {
                          @RequestParam("queryType") String queryType,
                          @RequestParam("queryInfo") String queryInfo,
                          @RequestParam("pageNum") Integer pageNum,
-                         @RequestParam("pageSize")Integer pageSize) {
+                         @RequestParam("pageSize") Integer pageSize) {
         return deliveryService.deliveryList(queryCom, queryType, queryInfo, pageNum, pageSize);
     }
 
@@ -72,7 +72,7 @@ public class DeliveryController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "快递id", required = true)
     })
     @GetMapping("/byId")
-    public ResultVO byId(Integer id){
+    public ResultVO byId(Integer id) {
         return deliveryService.deliveryById(id);
     }
 }

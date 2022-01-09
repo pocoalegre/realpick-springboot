@@ -45,7 +45,7 @@ public class ProductParamServiceImpl extends ServiceImpl<ProductParamMapper, Pro
         QueryWrapper<ProductParam> qw = new QueryWrapper<>();
 
         //判断是否有查询条件
-        if (!queryProductId.equals("")){
+        if (!queryProductId.equals("")) {
             qw.eq("product_id", Integer.valueOf(queryProductId));
         }
 
@@ -54,7 +54,7 @@ public class ProductParamServiceImpl extends ServiceImpl<ProductParamMapper, Pro
             List<ProductParam> productParamList = productParamMapper.selectList(qw);
             PageInfo<ProductParam> productParamPageInfo = new PageInfo<>(productParamList);
             return new ResultVO(StatusCode.OK, "获取列表成功！", productParamPageInfo);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }
@@ -65,7 +65,7 @@ public class ProductParamServiceImpl extends ServiceImpl<ProductParamMapper, Pro
         try {
             ProductParam productParam = productParamMapper.selectById(id);
             return new ResultVO(StatusCode.OK, "获取信息成功！", productParam);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }
@@ -74,9 +74,9 @@ public class ProductParamServiceImpl extends ServiceImpl<ProductParamMapper, Pro
     @Override
     public ResultVO deleteProductParam(Integer id) {
         int delete = productParamMapper.deleteById(id);
-        if (delete == 1){
+        if (delete == 1) {
             return new ResultVO(StatusCode.OK, "删除成功！", null);
-        }else {
+        } else {
             return new ResultVO(StatusCode.NO, "删除失败！", null);
         }
     }
@@ -89,13 +89,13 @@ public class ProductParamServiceImpl extends ServiceImpl<ProductParamMapper, Pro
         HashMap<String, Object> columnMap = new HashMap<>();
         columnMap.put("product_id", productId);
         List<Product> productList = productMapper.selectByMap(columnMap);
-        if (productList.size() == 0){
+        if (productList.size() == 0) {
             return new ResultVO(StatusCode.NO, "该商品编号不存在！", null);
-        }else {
+        } else {
             int update = productParamMapper.updateById(productParam);
-            if (update == 1){
+            if (update == 1) {
                 return new ResultVO(StatusCode.OK, "修改成功！", null);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "修改失败！", null);
             }
         }
@@ -109,13 +109,13 @@ public class ProductParamServiceImpl extends ServiceImpl<ProductParamMapper, Pro
         HashMap<String, Object> columnMap = new HashMap<>();
         columnMap.put("product_id", productId);
         List<Product> productList = productMapper.selectByMap(columnMap);
-        if (productList.size() == 0){
+        if (productList.size() == 0) {
             return new ResultVO(StatusCode.NO, "该商品编号不存在！", null);
-        }else {
+        } else {
             int insert = productParamMapper.insert(productParam);
-            if (insert == 1){
+            if (insert == 1) {
                 return new ResultVO(StatusCode.OK, "添加成功！", null);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "添加失败！", null);
             }
         }

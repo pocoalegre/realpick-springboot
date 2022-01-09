@@ -2,6 +2,8 @@ package com.realpick.service;
 
 import com.realpick.entity.ShoppingCart;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.realpick.vo.ResultVO;
+import org.apache.ibatis.io.ResolverUtil;
 
 /**
  * <p>
@@ -12,5 +14,17 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-10-22
  */
 public interface ShoppingCartService extends IService<ShoppingCart> {
+
+    //添加购物车
+    ResultVO addShoppingCart(ShoppingCart shoppingCart);
+
+    //修改购物车
+    ResultVO modifyShoppingCart(Integer id, Integer number);
+
+    //删除购物车
+    ResultVO deleteShoppingCart(Integer id);
+
+    //购物车查询
+    ResultVO ShoppingCartVOList(Integer pageNum, Integer pageSize, Integer userId);
 
 }

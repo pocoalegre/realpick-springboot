@@ -13,14 +13,14 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         //根据名称设置属性值
-        this.setFieldValByName("createTime",new Date(),metaObject);
-        this.setFieldValByName("updateTime",new Date(),metaObject);
+        this.setFieldValByName("createTime", new Date(), metaObject);
+        this.setFieldValByName("updateTime", new Date(), metaObject);
     }
 
     //使用mybatis-plus实现修改操作，这个方法会执行
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.setFieldValByName("updateTime",new Date(),metaObject);
+        this.setFieldValByName("updateTime", new Date(), metaObject);
     }
 
 }

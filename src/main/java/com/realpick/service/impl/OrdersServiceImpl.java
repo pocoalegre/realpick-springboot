@@ -43,18 +43,18 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
         QueryWrapper<Orders> qw = new QueryWrapper<>();
 
         //判断是否有查询条件
-        if (!queryType.equals("")){
-            if (queryType.equals("user_id")){
-                if (!queryInfo.equals("")){
+        if (!queryType.equals("")) {
+            if (queryType.equals("user_id")) {
+                if (!queryInfo.equals("")) {
                     try {
                         qw.eq(queryType, Integer.valueOf(queryInfo));
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println(e);
                         return new ResultVO(StatusCode.NO, "请输入合法的编号！", null);
                     }
                 }
-            }else {
-                if (!queryInfo.equals("")){
+            } else {
+                if (!queryInfo.equals("")) {
                     qw.like(queryType, queryInfo);
                 }
             }
@@ -65,7 +65,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
             List<Orders> OrderList = ordersMapper.selectList(qw);
             PageInfo<Orders> OrderPageInfo = new PageInfo<>(OrderList);
             return new ResultVO(StatusCode.OK, "获取列表成功！", OrderPageInfo);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }
@@ -76,7 +76,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
         try {
             Orders order = ordersMapper.selectById(id);
             return new ResultVO(StatusCode.OK, "获取信息成功！", order);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }
@@ -92,12 +92,12 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
         try {
             orderDetailMapper.deleteByMap(columnMap);
             int delete = ordersMapper.deleteById(id);
-            if (delete == 1){
+            if (delete == 1) {
                 return new ResultVO(StatusCode.OK, "删除成功！", null);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "删除失败！", null);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "删除异常！", null);
         }
@@ -106,9 +106,9 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
     @Override
     public ResultVO modifyOrder(Orders order) {
         int update = ordersMapper.updateById(order);
-        if (update == 1){
+        if (update == 1) {
             return new ResultVO(StatusCode.OK, "修改成功！", null);
-        }else {
+        } else {
             return new ResultVO(StatusCode.NO, "修改失败！", null);
         }
     }

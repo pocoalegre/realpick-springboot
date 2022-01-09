@@ -37,7 +37,7 @@ public class OrderDetailController {
     @GetMapping("/list")
     public ResultVO list(@RequestParam("queryOrderId") String queryOrderId,
                          @RequestParam("pageNum") Integer pageNum,
-                         @RequestParam("pageSize")Integer pageSize) {
+                         @RequestParam("pageSize") Integer pageSize) {
         return orderDetailService.orderDetailList(queryOrderId, pageNum, pageSize);
     }
 

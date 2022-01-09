@@ -39,14 +39,14 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
         List<Banner> bannerList = bannerMapper.selectByMap(columnMap);
 
         //判断
-        if (bannerList.size() == 0){
+        if (bannerList.size() == 0) {
             int insert = bannerMapper.insert(banner);
-            if (insert == 1){
+            if (insert == 1) {
                 return new ResultVO(StatusCode.OK, "添加成功！", null);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "添加失败！", null);
             }
-        }else {
+        } else {
             return new ResultVO(StatusCode.NO, "banner顺序重复！", null);
         }
     }
@@ -61,17 +61,17 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
         List<Banner> bannerList = bannerMapper.selectByMap(columnMap);
 
         //判断
-        if (bannerList.size() != 0){
-            if (!banner.getBannerId().equals(bannerList.get(0).getBannerId())){
+        if (bannerList.size() != 0) {
+            if (!banner.getBannerId().equals(bannerList.get(0).getBannerId())) {
                 return new ResultVO(StatusCode.NO, "banner顺序重复！", null);
             }
         }
 
         //修改
         int update = bannerMapper.updateById(banner);
-        if (update == 1){
+        if (update == 1) {
             return new ResultVO(StatusCode.OK, "修改成功！", null);
-        }else {
+        } else {
             return new ResultVO(StatusCode.NO, "修改失败！", null);
         }
     }
@@ -81,9 +81,9 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
 
         //删除
         int delete = bannerMapper.deleteById(id);
-        if (delete == 1){
+        if (delete == 1) {
             return new ResultVO(StatusCode.OK, "删除成功！", null);
-        }else {
+        } else {
             return new ResultVO(StatusCode.NO, "删除失败！", null);
         }
     }
@@ -98,7 +98,7 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
         QueryWrapper<Banner> qw = new QueryWrapper<>();
 
         //判断是否有查询条件
-        if (!queryType.equals("")){
+        if (!queryType.equals("")) {
             qw.eq("banner_type", Integer.valueOf(queryType));
             qw.orderByAsc("banner_seq");
         }
@@ -108,7 +108,7 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
             List<Banner> bannerList = bannerMapper.selectList(qw);
             PageInfo<Banner> bannerPageInfo = new PageInfo<>(bannerList);
             return new ResultVO(StatusCode.OK, "获取列表成功！", bannerPageInfo);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }
@@ -119,7 +119,7 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
         try {
             Banner banner = bannerMapper.selectById(id);
             return new ResultVO(StatusCode.OK, "获取信息成功！", banner);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }
@@ -136,7 +136,7 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
 
             List<Banner> bannerList = bannerMapper.selectList(qw);
             return new ResultVO(StatusCode.OK, "获取列表成功！", bannerList);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }

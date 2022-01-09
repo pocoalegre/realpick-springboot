@@ -50,18 +50,18 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         QueryWrapper<Product> qw = new QueryWrapper<>();
 
         //判断是否有查询条件
-        if (!queryType.equals("")){
-            if (queryType.equals("category_id")){
-                if (!queryInfo.equals("")){
+        if (!queryType.equals("")) {
+            if (queryType.equals("category_id")) {
+                if (!queryInfo.equals("")) {
                     try {
                         qw.eq(queryType, Integer.valueOf(queryInfo));
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println(e);
                         return new ResultVO(StatusCode.NO, "请输入合法的编号！", null);
                     }
                 }
-            }else {
-                if (!queryInfo.equals("")){
+            } else {
+                if (!queryInfo.equals("")) {
                     qw.like(queryType, queryInfo);
                 }
             }
@@ -72,7 +72,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             List<Product> productList = productMapper.selectList(qw);
             PageInfo<Product> productPageInfo = new PageInfo<>(productList);
             return new ResultVO(StatusCode.OK, "获取列表成功！", productPageInfo);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }
@@ -83,7 +83,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         try {
             Product product = productMapper.selectById(id);
             return new ResultVO(StatusCode.OK, "获取信息成功！", product);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }
@@ -100,12 +100,12 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             productParamMapper.deleteByMap(columnMap);
             productSkuMapper.deleteByMap(columnMap);
             int delete = productMapper.deleteById(id);
-            if (delete == 1){
+            if (delete == 1) {
                 return new ResultVO(StatusCode.OK, "删除成功！", null);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "删除失败！", null);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "删除异常！", null);
         }
@@ -119,13 +119,13 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         HashMap<String, Object> columnMap = new HashMap<>();
         columnMap.put("category_id", categoryId);
         List<Category> categoryList = categoryMapper.selectByMap(columnMap);
-        if (categoryList.size() == 0){
+        if (categoryList.size() == 0) {
             return new ResultVO(StatusCode.NO, "该商品类型不存在！", null);
-        }else {
+        } else {
             int update = productMapper.updateById(product);
-            if (update == 1){
+            if (update == 1) {
                 return new ResultVO(StatusCode.OK, "修改成功！", null);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "修改失败！", null);
             }
         }
@@ -140,14 +140,14 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         HashMap<String, Object> columnMap = new HashMap<>();
         columnMap.put("category_id", categoryId);
         List<Category> categoryList = categoryMapper.selectByMap(columnMap);
-        if (categoryList.size() == 0){
+        if (categoryList.size() == 0) {
             return new ResultVO(StatusCode.NO, "该商品类型不存在！", null);
-        }else {
+        } else {
             product.setProductSales(0);
             int insert = productMapper.insert(product);
-            if (insert == 1){
+            if (insert == 1) {
                 return new ResultVO(StatusCode.OK, "添加成功！", null);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "添加失败！", null);
             }
         }
@@ -164,7 +164,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
             List<Product> productList = productMapper.selectList(qw);
             return new ResultVO(StatusCode.OK, "获取列表成功！", productList);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }
@@ -181,7 +181,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             List<Product> productList = productMapper.selectList(null);
             PageInfo<Product> productPageInfo = new PageInfo<>(productList);
             return new ResultVO(StatusCode.OK, "获取列表成功！", productPageInfo);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }
@@ -192,7 +192,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         try {
             ProductVO productVO = productMapper.productVO(id);
             return new ResultVO(StatusCode.OK, "获取信息成功！", productVO);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }

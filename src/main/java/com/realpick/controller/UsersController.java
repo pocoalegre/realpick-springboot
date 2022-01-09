@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 @Api(value = "用户操作接口", tags = "用户管理")
 @CrossOrigin
 public class UsersController {
-    
+
     @Autowired
     private UsersService usersService;
 
@@ -55,7 +55,7 @@ public class UsersController {
     })
     @PostMapping("/regist")
     public ResultVO regist(@RequestParam("name") String name,
-                           @RequestParam("pwd") String pwd){
+                           @RequestParam("pwd") String pwd) {
         return usersService.userRegist(name, pwd);
     }
 
@@ -72,7 +72,7 @@ public class UsersController {
         BufferedImage image = defaultKaptcha.createImage(text);
 
         // 使用redis缓存验证码的值，并设置过期时间为60秒
-        redisTemplate.opsForValue().set("imgCode",text,60, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set("imgCode", text, 60, TimeUnit.SECONDS);
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(image, "jpg", out);
         out.flush();
@@ -88,15 +88,15 @@ public class UsersController {
     @GetMapping("/login")
     public ResultVO login(@RequestParam("name") String name,
                           @RequestParam("pwd") String pwd,
-                          @RequestParam("code") String verificationCode){
+                          @RequestParam("code") String verificationCode) {
         //判断时效
-        if(!redisTemplate.hasKey("imgCode")) {
+        if (!redisTemplate.hasKey("imgCode")) {
             return new ResultVO(StatusCode.NO, "验证码已过期！", null);
         }
 
         //判断输入，成功则进行账号密码判断
         String code = redisTemplate.opsForValue().get("imgCode").toString();
-        if(StringUtils.equals(verificationCode,code)) {
+        if (StringUtils.equals(verificationCode, code)) {
             return usersService.userLogin(name, pwd);
         } else {
             return new ResultVO(StatusCode.NO, "验证码输入错误！", null);
@@ -108,13 +108,13 @@ public class UsersController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "用户id", required = true)
     )
     @GetMapping("/byId")
-    public ResultVO byId(@RequestParam("id") Integer id){
+    public ResultVO byId(@RequestParam("id") Integer id) {
         return usersService.userById(id);
     }
 
     @ApiOperation("修改信息接口")
     @PutMapping("/modify")
-    public ResultVO modify(@RequestBody Users user){
+    public ResultVO modify(@RequestBody Users user) {
         return usersService.userModify(user);
     }
 
@@ -127,7 +127,7 @@ public class UsersController {
     @PutMapping("/pwdModify")
     public ResultVO pwdModify(@RequestParam("id") Integer id,
                               @RequestParam("pwd") String pwd,
-                              @RequestParam("newPwd") String newPwd){
+                              @RequestParam("newPwd") String newPwd) {
         return usersService.userPwdModify(id, pwd, newPwd);
     }
 
@@ -138,7 +138,7 @@ public class UsersController {
     })
     @PutMapping("/pwdModifyByAdmin")
     public ResultVO pwdModifyByAdmin(@RequestParam("id") Integer id,
-                              @RequestParam("newPwd") String newPwd){
+                                     @RequestParam("newPwd") String newPwd) {
         return usersService.userPwdModifyByAdmin(id, newPwd);
     }
 
@@ -153,7 +153,7 @@ public class UsersController {
     public ResultVO list(@RequestParam("queryType") String queryType,
                          @RequestParam("queryInfo") String queryInfo,
                          @RequestParam("pageNum") Integer pageNum,
-                         @RequestParam("pageSize")Integer pageSize){
+                         @RequestParam("pageSize") Integer pageSize) {
         return usersService.userList(queryType, queryInfo, pageNum, pageSize);
     }
 
@@ -162,20 +162,20 @@ public class UsersController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "用户id", required = true)
     })
     @DeleteMapping("/delete")
-    public ResultVO delete(@RequestParam("id") Integer id){
+    public ResultVO delete(@RequestParam("id") Integer id) {
         return usersService.userDelete(id);
     }
 
     @ApiOperation("更改头像接口")
     @PutMapping("/uploadImg")
-    public ResultVO uploadImg(MultipartFile file, Integer id){
+    public ResultVO uploadImg(MultipartFile file, Integer id) {
         ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/userHead");
-        if (saveResultVO.getCode() == 10000){
+        if (saveResultVO.getCode() == 10000) {
             return usersService.userImgModify(id, (String) saveResultVO.getData());
-        }else{
+        } else {
             return saveResultVO;
         }
     }
-    
+
 }
 

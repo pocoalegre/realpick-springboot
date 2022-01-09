@@ -28,7 +28,7 @@ public interface UsersService extends IService<Users> {
     ResultVO userModify(Users user);
 
     //修改密码
-    ResultVO userPwdModify(Integer id,String pwd, String newPwd);
+    ResultVO userPwdModify(Integer id, String pwd, String newPwd);
 
     //用户修改密码
     ResultVO userPwdModifyByAdmin(Integer id, String newPwd);

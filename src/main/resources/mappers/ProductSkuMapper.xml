@@ -4,14 +4,14 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.realpick.entity.ProductSku">
-        <id column="sku_id" property="skuId" />
-        <result column="product_id" property="productId" />
-        <result column="sku_size" property="skuSize" />
-        <result column="sku_color" property="skuColor" />
-        <result column="color_img" property="colorImg" />
-        <result column="deleted" property="deleted" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="sku_id" property="skuId"/>
+        <result column="product_id" property="productId"/>
+        <result column="sku_size" property="skuSize"/>
+        <result column="sku_color" property="skuColor"/>
+        <result column="color_img" property="colorImg"/>
+        <result column="deleted" property="deleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
 </mapper>

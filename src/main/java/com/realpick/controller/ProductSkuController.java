@@ -51,7 +51,7 @@ public class ProductSkuController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品skuid", required = true)
     })
     @GetMapping("/byId")
-    public ResultVO byId(@RequestParam("id") Integer id){
+    public ResultVO byId(@RequestParam("id") Integer id) {
         return productSkuService.productSkuById(id);
     }
 
@@ -60,30 +60,30 @@ public class ProductSkuController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)
     })
     @DeleteMapping("/delete")
-    public ResultVO delete(@RequestParam("id") Integer id){
+    public ResultVO delete(@RequestParam("id") Integer id) {
         return productSkuService.deleteProductSku(id);
     }
 
     @ApiOperation("修改接口")
     @PutMapping("/modify")
-    public ResultVO modify(MultipartFile file, String productSku){
+    public ResultVO modify(MultipartFile file, String productSku) {
 
         //json对象转换
         ProductSku productSkuByJson = JSON.parseObject(productSku, ProductSku.class);
 
         //非空字段
-        if (file == null){
+        if (file == null) {
             return productSkuService.modifyProductSku(productSkuByJson);
-        }else {
+        } else {
 
             //上传文件
             ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/product/sku");
-            if (saveResultVO.getCode() == 10000){
+            if (saveResultVO.getCode() == 10000) {
                 productSkuByJson.setColorImg((String) saveResultVO.getData());
 
                 //添加sku图片
                 return productSkuService.modifyProductSku(productSkuByJson);
-            }else {
+            } else {
                 return saveResultVO;
             }
         }
@@ -91,24 +91,24 @@ public class ProductSkuController {
 
     @ApiOperation("添加接口")
     @PostMapping("/add")
-    public ResultVO add(MultipartFile file, String productSku){
+    public ResultVO add(MultipartFile file, String productSku) {
 
         //json对象转换
         ProductSku productSkuByJson = JSON.parseObject(productSku, ProductSku.class);
 
         //非空字段
-        if (file == null){
+        if (file == null) {
             return new ResultVO(StatusCode.NO, "必须上传图片！", null);
-        }else {
+        } else {
 
             //上传文件
             ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/product/sku");
-            if (saveResultVO.getCode() == 10000){
+            if (saveResultVO.getCode() == 10000) {
                 productSkuByJson.setColorImg((String) saveResultVO.getData());
 
                 //添加sku图片
                 return productSkuService.addProductSku(productSkuByJson);
-            }else {
+            } else {
                 return saveResultVO;
             }
         }
@@ -119,7 +119,7 @@ public class ProductSkuController {
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)
     })
-    public ResultVO byProductId(Integer id){
+    public ResultVO byProductId(Integer id) {
         return productSkuService.productSkuByProductId(id);
     }
 }

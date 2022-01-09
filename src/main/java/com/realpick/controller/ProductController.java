@@ -53,7 +53,7 @@ public class ProductController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)
     })
     @GetMapping("/byId")
-    public ResultVO byId(@RequestParam("id") Integer id){
+    public ResultVO byId(@RequestParam("id") Integer id) {
         return productService.productById(id);
     }
 
@@ -62,30 +62,30 @@ public class ProductController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)
     })
     @DeleteMapping("/delete")
-    public ResultVO delete(@RequestParam("id") Integer id){
+    public ResultVO delete(@RequestParam("id") Integer id) {
         return productService.deleteProduct(id);
     }
 
     @ApiOperation("修改接口")
     @PutMapping("/modify")
-    public ResultVO modify(MultipartFile file, String product){
-        
+    public ResultVO modify(MultipartFile file, String product) {
+
         //json对象转换
         Product productByJson = JSON.parseObject(product, Product.class);
 
         //非空字段
-        if (file == null){
+        if (file == null) {
             return productService.modifyProduct(productByJson);
-        }else {
+        } else {
 
             //上传文件
             ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/product/img");
-            if (saveResultVO.getCode() == 10000){
+            if (saveResultVO.getCode() == 10000) {
                 productByJson.setProductImg((String) saveResultVO.getData());
 
                 //添加商品图片
                 return productService.modifyProduct(productByJson);
-            }else {
+            } else {
                 return saveResultVO;
             }
         }
@@ -93,24 +93,24 @@ public class ProductController {
 
     @ApiOperation("添加接口")
     @PostMapping("/add")
-    public ResultVO add(MultipartFile file, String product){
-        
+    public ResultVO add(MultipartFile file, String product) {
+
         //json对象转换
         Product productByJson = JSON.parseObject(product, Product.class);
 
         //非空字段
-        if (file == null){
+        if (file == null) {
             return new ResultVO(StatusCode.NO, "必须上传图片！", null);
-        }else {
+        } else {
 
             //上传文件
             ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/product/img");
-            if (saveResultVO.getCode() == 10000){
+            if (saveResultVO.getCode() == 10000) {
                 productByJson.setProductImg((String) saveResultVO.getData());
 
                 //添加商品图片
                 return productService.addProduct(productByJson);
-            }else {
+            } else {
                 return saveResultVO;
             }
         }
@@ -137,7 +137,7 @@ public class ProductController {
     @GetMapping("/voById")
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)})
-    public ResultVO voById(Integer id){
+    public ResultVO voById(Integer id) {
         return productService.productVOById(id);
     }
 }

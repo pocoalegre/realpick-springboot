@@ -20,22 +20,22 @@ public class SwaggerConfig {
 
     /* Docket封装接口文档 */
     @Bean
-    public Docket getDocket(){
+    public Docket getDocket() {
 
         //创建封面信息对象
         ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
         apiInfoBuilder.title("雀石优选后端接口说明")
-                      .description("雀石优选后端接口规范")
-                      .version("0.0.1-SNAPSHOT");
+                .description("雀石优选后端接口规范")
+                .version("0.0.1-SNAPSHOT");
         ApiInfo apiInfo = apiInfoBuilder.build();
 
         //指定文档封面信息
         return new Docket(DocumentationType.SWAGGER_2)
-                        .apiInfo(apiInfo)
-                        .select()
-                        .apis(RequestHandlerSelectors.basePackage("com.realpick.controller"))
-                        .paths(PathSelectors.any())
-                        .build();
+                .apiInfo(apiInfo)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.realpick.controller"))
+                .paths(PathSelectors.any())
+                .build();
     }
 
 }

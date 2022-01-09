@@ -38,7 +38,7 @@ public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, Order
         QueryWrapper<OrderDetail> qw = new QueryWrapper<>();
 
         //判断是否有查询条件
-        if (!queryOrderId.equals("")){
+        if (!queryOrderId.equals("")) {
             qw.eq("order_id", Integer.valueOf(queryOrderId));
         }
 
@@ -47,7 +47,7 @@ public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, Order
             List<OrderDetail> OrderDetailList = orderDetailMapper.selectList(qw);
             PageInfo<OrderDetail> OrderDetailPageInfo = new PageInfo<>(OrderDetailList);
             return new ResultVO(StatusCode.OK, "获取列表成功！", OrderDetailPageInfo);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }

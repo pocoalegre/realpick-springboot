@@ -1,12 +1,13 @@
 package com.realpick.entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Data
+@ToString
 public class ProductVO {
 
     private Integer productId;

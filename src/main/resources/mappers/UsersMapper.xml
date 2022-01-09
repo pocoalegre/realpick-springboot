@@ -4,18 +4,18 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.realpick.entity.Users">
-        <id column="user_id" property="userId" />
-        <result column="user_name" property="userName" />
-        <result column="user_pwd" property="userPwd" />
-        <result column="user_nickname" property="userNickname" />
-        <result column="user_img" property="userImg" />
-        <result column="user_gender" property="userGender" />
-        <result column="user_age" property="userAge" />
-        <result column="user_tel" property="userTel" />
-        <result column="user_email" property="userEmail" />
-        <result column="deleted" property="deleted" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_pwd" property="userPwd"/>
+        <result column="user_nickname" property="userNickname"/>
+        <result column="user_img" property="userImg"/>
+        <result column="user_gender" property="userGender"/>
+        <result column="user_age" property="userAge"/>
+        <result column="user_tel" property="userTel"/>
+        <result column="user_email" property="userEmail"/>
+        <result column="deleted" property="deleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
 </mapper>

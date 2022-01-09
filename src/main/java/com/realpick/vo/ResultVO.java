@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class ResultVO {
 
     //响应给前端的状态码
-    @ApiModelProperty(value = "响应状态码",dataType = "int")
+    @ApiModelProperty(value = "响应状态码", dataType = "int")
     private int code;
 
     //响应给前端的提示信息

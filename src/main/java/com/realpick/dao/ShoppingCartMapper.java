@@ -1,8 +1,12 @@
 package com.realpick.dao;
 
+import com.realpick.entity.ProductVO;
 import com.realpick.entity.ShoppingCart;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.realpick.entity.ShoppingCartVO;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,4 +20,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ShoppingCartMapper extends BaseMapper<ShoppingCart> {
 
+    //根据用户查询购物车VO类
+    List<ShoppingCartVO> shoppingCatVO(Integer userId);
 }

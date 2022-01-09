@@ -35,26 +35,26 @@ public class CategoryController {
 
     @ApiOperation("添加接口")
     @PostMapping("add")
-    public ResultVO add(MultipartFile file, String category){
+    public ResultVO add(MultipartFile file, String category) {
 
         //json对象转换
         Category categoryByJson = JSON.parseObject(category, Category.class);
-        if (file == null){
-            if (categoryByJson.getCategoryLevel() == 1){
+        if (file == null) {
+            if (categoryByJson.getCategoryLevel() == 1) {
                 return new ResultVO(StatusCode.NO, "必须上传图片！", null);
-            }else {
+            } else {
                 return categoryService.addCategory(categoryByJson);
             }
-        }else {
+        } else {
 
             //上传文件
             ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/category");
-            if (saveResultVO.getCode() == 10000){
+            if (saveResultVO.getCode() == 10000) {
                 categoryByJson.setImgUrl((String) saveResultVO.getData());
 
                 //添加商品类型
                 return categoryService.addCategory(categoryByJson);
-            }else {
+            } else {
                 return saveResultVO;
             }
         }
@@ -62,22 +62,22 @@ public class CategoryController {
 
     @ApiOperation("修改接口")
     @PutMapping("modify")
-    public ResultVO modify(MultipartFile file, String category){
+    public ResultVO modify(MultipartFile file, String category) {
 
         //json对象转换
         Category categoryByJson = JSON.parseObject(category, Category.class);
-        if (file == null){
+        if (file == null) {
             return categoryService.modifyCategory(categoryByJson);
-        }else {
+        } else {
             //上传文件
             ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/category");
             categoryByJson.setImgUrl((String) saveResultVO.getData());
-            if (saveResultVO.getCode() == 10000){
+            if (saveResultVO.getCode() == 10000) {
                 categoryByJson.setImgUrl((String) saveResultVO.getData());
 
                 //修改商品类型
                 return categoryService.modifyCategory(categoryByJson);
-            }else {
+            } else {
                 return saveResultVO;
             }
         }
@@ -105,7 +105,7 @@ public class CategoryController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品类型id", required = true)
     })
     @DeleteMapping("/delete")
-    public ResultVO delete(@RequestParam("id") Integer id){
+    public ResultVO delete(@RequestParam("id") Integer id) {
         return categoryService.deleteCategory(id);
     }
 
@@ -114,7 +114,7 @@ public class CategoryController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品类型id", required = true)
     })
     @GetMapping("/byId")
-    public ResultVO byId(Integer id){
+    public ResultVO byId(Integer id) {
         return categoryService.categoryById(id);
     }
 

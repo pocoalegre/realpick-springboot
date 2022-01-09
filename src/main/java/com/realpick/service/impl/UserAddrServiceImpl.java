@@ -44,7 +44,7 @@ public class UserAddrServiceImpl extends ServiceImpl<UserAddrMapper, UserAddr> i
             List<UserAddr> userAddrList = userAddrMapper.selectList(qw);
             PageInfo<UserAddr> userAddrPageInfo = new PageInfo<>(userAddrList);
             return new ResultVO(StatusCode.OK, "获取列表成功！", userAddrPageInfo);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }
@@ -55,7 +55,7 @@ public class UserAddrServiceImpl extends ServiceImpl<UserAddrMapper, UserAddr> i
         try {
             UserAddr userAddr = userAddrMapper.selectById(id);
             return new ResultVO(StatusCode.OK, "获取信息成功！", userAddr);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }
@@ -71,19 +71,19 @@ public class UserAddrServiceImpl extends ServiceImpl<UserAddrMapper, UserAddr> i
         List<UserAddr> userAddrList1 = userAddrMapper.selectByMap(columnMap1);
 
         //如果没有地址，则第一个地址设置为默认
-        if (userAddrList1.size() == 0){
-            if (userAddr.getIsMain() != 0){
+        if (userAddrList1.size() == 0) {
+            if (userAddr.getIsMain() != 0) {
                 int insert = userAddrMapper.insert(userAddr);
-                if (insert == 1){
+                if (insert == 1) {
                     return new ResultVO(StatusCode.OK, "添加成功！", null);
-                }else {
+                } else {
                     return new ResultVO(StatusCode.NO, "添加失败！", null);
                 }
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "必须有默认地址！", null);
             }
-        }else {
-            if (userAddr.getIsMain() != 0){
+        } else {
+            if (userAddr.getIsMain() != 0) {
 
                 //查询默认地址
                 HashMap<String, Object> columnMap2 = new HashMap<>();
@@ -93,20 +93,20 @@ public class UserAddrServiceImpl extends ServiceImpl<UserAddrMapper, UserAddr> i
 
                 //如果有默认地址，添加地址为默认地址时，则更新默认地址
                 int insert = userAddrMapper.insert(userAddr);
-                if (insert == 1){
+                if (insert == 1) {
 
                     //更新默认地址
                     userAddrList2.get(0).setIsMain(0);
                     userAddrMapper.updateById(userAddrList2.get(0));
                     return new ResultVO(StatusCode.OK, "添加成功！", null);
-                }else {
+                } else {
                     return new ResultVO(StatusCode.NO, "添加失败！", null);
                 }
-            }else {
+            } else {
                 int insert = userAddrMapper.insert(userAddr);
-                if (insert == 1){
+                if (insert == 1) {
                     return new ResultVO(StatusCode.OK, "添加成功！", null);
-                }else {
+                } else {
                     return new ResultVO(StatusCode.NO, "添加失败！", null);
                 }
             }
@@ -124,7 +124,7 @@ public class UserAddrServiceImpl extends ServiceImpl<UserAddrMapper, UserAddr> i
         List<UserAddr> userAddrList1 = userAddrMapper.selectByMap(columnMap1);
 
         //如果当前修改为唯一地址
-        if (userAddrList1.size() == 1){
+        if (userAddrList1.size() == 1) {
             if (userAddr.getIsMain() != 0) {
                 int update = userAddrMapper.updateById(userAddr);
                 if (update == 1) {
@@ -132,10 +132,10 @@ public class UserAddrServiceImpl extends ServiceImpl<UserAddrMapper, UserAddr> i
                 } else {
                     return new ResultVO(StatusCode.NO, "修改失败！", null);
                 }
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "必须有默认地址！", null);
             }
-        }else {
+        } else {
 
             //查询默认地址
             HashMap<String, Object> columnMap2 = new HashMap<>();
@@ -144,33 +144,33 @@ public class UserAddrServiceImpl extends ServiceImpl<UserAddrMapper, UserAddr> i
             List<UserAddr> userAddrList2 = userAddrMapper.selectByMap(columnMap2);
 
             //如果当前修改地址为默认地址，则无法修改默认
-            if (userAddr.getAddrId().equals(userAddrList2.get(0).getAddrId())){
+            if (userAddr.getAddrId().equals(userAddrList2.get(0).getAddrId())) {
                 userAddr.setIsMain(1);
                 int update = userAddrMapper.updateById(userAddr);
-                if (update == 1){
+                if (update == 1) {
                     return new ResultVO(StatusCode.OK, "修改成功！", null);
-                }else {
+                } else {
                     return new ResultVO(StatusCode.NO, "修改失败！", null);
                 }
-            }else {
+            } else {
 
                 //如果非默认地址，修改为默认地址，则更新默认地址
-                if (userAddr.getIsMain() == 1){
+                if (userAddr.getIsMain() == 1) {
                     int update = userAddrMapper.updateById(userAddr);
-                    if (update == 1){
+                    if (update == 1) {
 
                         //更新默认地址
                         userAddrList2.get(0).setIsMain(0);
                         userAddrMapper.updateById(userAddrList2.get(0));
                         return new ResultVO(StatusCode.OK, "修改成功！", null);
-                    }else {
+                    } else {
                         return new ResultVO(StatusCode.NO, "修改失败！", null);
                     }
-                }else {
+                } else {
                     int update = userAddrMapper.updateById(userAddr);
-                    if (update == 1){
+                    if (update == 1) {
                         return new ResultVO(StatusCode.OK, "修改成功！", null);
-                    }else {
+                    } else {
                         return new ResultVO(StatusCode.NO, "修改失败！", null);
                     }
                 }
@@ -182,13 +182,13 @@ public class UserAddrServiceImpl extends ServiceImpl<UserAddrMapper, UserAddr> i
     public ResultVO deleteUserAddr(Integer id) {
 
         UserAddr userAddr = userAddrMapper.selectById(id);
-        if (userAddr.getIsMain() == 1){
+        if (userAddr.getIsMain() == 1) {
             return new ResultVO(StatusCode.NO, "默认地址无法删除！", null);
-        }else {
+        } else {
             int delete = userAddrMapper.deleteById(id);
-            if (delete == 1){
+            if (delete == 1) {
                 return new ResultVO(StatusCode.OK, "删除成功！", null);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "删除失败！", null);
             }
         }

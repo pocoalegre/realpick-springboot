@@ -15,4 +15,70 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
+    <resultMap id="ShoppingCartVO" type="com.realpick.entity.ShoppingCartVO">
+        <id column="cart_id_1" property="cartId" />
+        <result column="user_id_1" property="userId" />
+        <result column="cart_number_1" property="cartNumber" />
+        <result column="cart_price_1" property="cartPrice" />
+        <result column="deleted_1" property="deleted" />
+        <result column="create_time_1" property="createTime" />
+        <result column="update_time_1" property="updateTime" />
+        <association property="product" javaType="com.realpick.entity.Product">
+            <id column="product_id_2" property="productId" />
+            <result column="product_img_2" property="productImg" />
+            <result column="product_name_2" property="productName" />
+            <result column="product_price_2" property="productPrice" />
+            <result column="category_id_2" property="categoryId" />
+            <result column="product_brand_2" property="productBrand" />
+            <result column="product_stock_2" property="productStock" />
+            <result column="product_sales_2" property="productSales" />
+            <result column="deleted_2" property="deleted" />
+            <result column="create_time_2" property="createTime" />
+            <result column="update_time_2" property="updateTime" />
+        </association>
+        <association property="productSku" javaType="com.realpick.entity.ProductSku">
+            <id column="sku_id_3" property="skuId" />
+            <result column="product_id_3" property="productId" />
+            <result column="sku_size_3" property="skuSize" />
+            <result column="sku_color_3" property="skuColor" />
+            <result column="color_img_3" property="colorImg" />
+            <result column="deleted_3" property="deleted" />
+            <result column="create_time_3" property="createTime" />
+            <result column="update_time_3" property="updateTime" />
+        </association>
+    </resultMap>
+
+    <select id="shoppingCatVO" resultMap="ShoppingCartVO">
+        select t1.cart_id as cart_id_1,
+               t1.user_id as user_id_1,
+               t1.cart_number as cart_number_1,
+               t1.cart_price as cart_price_1,
+               t1.deleted as deleted_1,
+               t1.create_time as create_time_1,
+               t1.update_time as update_time_1,
+               t2.product_id as product_id_2,
+               t2.product_img as product_img_2,
+               t2.product_name as product_name_2,
+               t2.product_price as product_price_2,
+               t2.category_id as category_id_2,
+               t2.product_brand as product_brand_2,
+               t2.product_stock as product_stock_2,
+               t2.product_sales as product_sales_2,
+               t2.deleted as deleted_2,
+               t2.create_time as create_time_2,
+               t2.update_time as update_time_2,
+               t3.sku_id as sku_id_3,
+               t3.product_id as product_id_3,
+               t3.sku_size as sku_size_3,
+               t3.sku_color as sku_color_3,
+               t3.color_img as color_img_3,
+               t3.deleted as deleted_3,
+               t3.create_time as create_time_3,
+               t3.update_time as update_time_3
+        from shopping_cart t1 left join product t2 on t1.product_id = t2.product_id
+                              left join product_sku t3 on t1.sku_id = t3.sku_id
+        where t1.user_id = #{userId} and t1.deleted = 0
+    </select>
+
+
 </mapper>

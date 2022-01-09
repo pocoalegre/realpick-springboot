@@ -38,7 +38,7 @@ public class ProductParamController {
     @GetMapping("/list")
     public ResultVO list(@RequestParam("queryProductId") String queryProductId,
                          @RequestParam("pageNum") Integer pageNum,
-                         @RequestParam("pageSize")Integer pageSize) {
+                         @RequestParam("pageSize") Integer pageSize) {
         return productParamService.productParamList(queryProductId, pageNum, pageSize);
     }
 
@@ -47,7 +47,7 @@ public class ProductParamController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品参数id", required = true)
     })
     @GetMapping("/byId")
-    public ResultVO byId(@RequestParam("id") Integer id){
+    public ResultVO byId(@RequestParam("id") Integer id) {
         return productParamService.productParamById(id);
     }
 
@@ -56,19 +56,19 @@ public class ProductParamController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)
     })
     @DeleteMapping("/delete")
-    public ResultVO delete(@RequestParam("id") Integer id){
+    public ResultVO delete(@RequestParam("id") Integer id) {
         return productParamService.deleteProductParam(id);
     }
 
     @ApiOperation("修改接口")
     @PutMapping("/modify")
-    public ResultVO modify(@RequestBody ProductParam productParam){
+    public ResultVO modify(@RequestBody ProductParam productParam) {
         return productParamService.modifyProductParam(productParam);
     }
 
     @ApiOperation("添加接口")
     @PostMapping("/add")
-    public ResultVO add(@RequestBody ProductParam productParam){
+    public ResultVO add(@RequestBody ProductParam productParam) {
         return productParamService.addProductParam(productParam);
     }
 
@@ -77,7 +77,7 @@ public class ProductParamController {
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)
     })
-    public ResultVO byProductId(Integer id){
+    public ResultVO byProductId(Integer id) {
         return productParamService.productParamByProductId(id);
     }
 }

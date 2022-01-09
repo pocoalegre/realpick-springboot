@@ -4,63 +4,63 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.realpick.entity.Product">
-        <id column="product_id" property="productId" />
-        <result column="product_img" property="productImg" />
-        <result column="product_name" property="productName" />
-        <result column="product_price" property="productPrice" />
-        <result column="category_id" property="categoryId" />
-        <result column="product_brand" property="productBrand" />
-        <result column="product_stock" property="productStock" />
-        <result column="product_sales" property="productSales" />
-        <result column="deleted" property="deleted" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="product_id" property="productId"/>
+        <result column="product_img" property="productImg"/>
+        <result column="product_name" property="productName"/>
+        <result column="product_price" property="productPrice"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="product_brand" property="productBrand"/>
+        <result column="product_stock" property="productStock"/>
+        <result column="product_sales" property="productSales"/>
+        <result column="deleted" property="deleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
-    <resultMap id="ProductIncludeCategory" type="com.realpick.entity.ProductVO">
-        <id column="product_id_1" property="productId" />
-        <result column="product_img_1" property="productImg" />
-        <result column="product_name_1" property="productName" />
-        <result column="product_price_1" property="productPrice" />
-        <result column="product_brand_1" property="productBrand" />
-        <result column="product_stock_1" property="productStock" />
-        <result column="product_sales_1" property="productSales" />
-        <result column="deleted_1" property="deleted" />
-        <result column="create_time_1" property="createTime" />
-        <result column="update_time_1" property="updateTime" />
+    <resultMap id="ProductVO" type="com.realpick.entity.ProductVO">
+        <id column="product_id_1" property="productId"/>
+        <result column="product_img_1" property="productImg"/>
+        <result column="product_name_1" property="productName"/>
+        <result column="product_price_1" property="productPrice"/>
+        <result column="product_brand_1" property="productBrand"/>
+        <result column="product_stock_1" property="productStock"/>
+        <result column="product_sales_1" property="productSales"/>
+        <result column="deleted_1" property="deleted"/>
+        <result column="create_time_1" property="createTime"/>
+        <result column="update_time_1" property="updateTime"/>
         <association property="category" javaType="com.realpick.entity.Category">
-            <id column="category_id_2" property="categoryId" />
-            <result column="category_name_2" property="categoryName" />
-            <result column="category_level_2" property="categoryLevel" />
-            <result column="parent_id_2" property="parentId" />
-            <result column="img_url_2" property="imgUrl" />
-            <result column="deleted_2" property="deleted" />
-            <result column="create_time_2" property="createTime" />
-            <result column="update_time_2" property="updateTime" />
+            <id column="category_id_2" property="categoryId"/>
+            <result column="category_name_2" property="categoryName"/>
+            <result column="category_level_2" property="categoryLevel"/>
+            <result column="parent_id_2" property="parentId"/>
+            <result column="img_url_2" property="imgUrl"/>
+            <result column="deleted_2" property="deleted"/>
+            <result column="create_time_2" property="createTime"/>
+            <result column="update_time_2" property="updateTime"/>
         </association>
     </resultMap>
 
-    <select id="productVO" resultMap="ProductIncludeCategory">
+    <select id="productVO" resultMap="ProductVO">
         select t1.product_id as product_id_1,
-         t1.product_img as product_img_1,
-         t1.product_name as product_name_1,
-         t1.product_price as product_price_1,
-         t1.product_brand as product_brand_1,
-         t1.product_stock as product_stock_1,
-         t1.product_sales as product_sales_1,
-         t1.deleted as deleted_1,
-         t1.create_time as create_time_1,
-         t1.update_time as update_time_1,
-         t2.category_id as category_id_2,
-         t2.category_name as category_name_2,
-         t2.category_level as category_level_2,
-         t2.parent_id as parent_id_2,
-         t2.img_url as img_url_2,
-         t2.deleted as deleted_2,
-         t2.create_time as create_time_2,
-         t2.update_time as update_time_2
-    from product t1 left join category t2 on t1.category_id = t2.category_id
-    where t1.product_id = #{id}
+               t1.product_img as product_img_1,
+               t1.product_name as product_name_1,
+               t1.product_price as product_price_1,
+               t1.product_brand as product_brand_1,
+               t1.product_stock as product_stock_1,
+               t1.product_sales as product_sales_1,
+               t1.deleted as deleted_1,
+               t1.create_time as create_time_1,
+               t1.update_time as update_time_1,
+               t2.category_id as category_id_2,
+               t2.category_name as category_name_2,
+               t2.category_level as category_level_2,
+               t2.parent_id as parent_id_2,
+               t2.img_url as img_url_2,
+               t2.deleted as deleted_2,
+               t2.create_time as create_time_2,
+               t2.update_time as update_time_2
+        from product t1 left join category t2 on t1.category_id = t2.category_id
+        where t1.product_id = #{id} and t1.deleted = 0
     </select>
 
 

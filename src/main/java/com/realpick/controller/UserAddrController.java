@@ -47,19 +47,19 @@ public class UserAddrController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "用户地址id", required = true)
     })
     @GetMapping("/byId")
-    public ResultVO byId(Integer id){
+    public ResultVO byId(Integer id) {
         return userAddrService.userAddrById(id);
     }
 
     @ApiOperation("添加接口")
     @PostMapping("add")
-    public ResultVO add(@RequestBody UserAddr userAddr){
+    public ResultVO add(@RequestBody UserAddr userAddr) {
         return userAddrService.addUserAddr(userAddr);
     }
 
     @ApiOperation("修改接口")
     @PutMapping("modify")
-    public ResultVO modify(@RequestBody UserAddr userAddr){
+    public ResultVO modify(@RequestBody UserAddr userAddr) {
         return userAddrService.modifyUserAddr(userAddr);
     }
 
@@ -68,7 +68,7 @@ public class UserAddrController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "用户地址id", required = true)
     })
     @DeleteMapping("/delete")
-    public ResultVO delete(@RequestParam("id") Integer id){
+    public ResultVO delete(@RequestParam("id") Integer id) {
         return userAddrService.deleteUserAddr(id);
     }
 }

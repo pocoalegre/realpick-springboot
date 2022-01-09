@@ -35,24 +35,24 @@ public class BannerController {
 
     @ApiOperation("添加接口")
     @PostMapping("add")
-    public ResultVO add(MultipartFile file, String banner){
+    public ResultVO add(MultipartFile file, String banner) {
 
         //json对象转换
         Banner bannerByJson = JSON.parseObject(banner, Banner.class);
 
         //非空字段
-        if (file == null){
+        if (file == null) {
             return new ResultVO(StatusCode.NO, "必须上传图片！", null);
-        }else {
+        } else {
 
             //上传文件
             ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/banner");
-            if (saveResultVO.getCode() == 10000){
+            if (saveResultVO.getCode() == 10000) {
                 bannerByJson.setBannerImg((String) saveResultVO.getData());
 
                 //添加banner
                 return bannerService.addBanner(bannerByJson);
-            }else {
+            } else {
                 return saveResultVO;
             }
         }
@@ -60,23 +60,23 @@ public class BannerController {
 
     @ApiOperation("修改接口")
     @PutMapping("modify")
-    public ResultVO modify(MultipartFile file, String banner){
+    public ResultVO modify(MultipartFile file, String banner) {
 
         //json对象转换
         Banner bannerByJson = JSON.parseObject(banner, Banner.class);
-        if (file == null){
+        if (file == null) {
             return bannerService.modifyBanner(bannerByJson);
-        }else {
+        } else {
 
             //上传文件
             ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/banner");
             bannerByJson.setBannerImg((String) saveResultVO.getData());
-            if (saveResultVO.getCode() == 10000){
+            if (saveResultVO.getCode() == 10000) {
                 bannerByJson.setBannerImg((String) saveResultVO.getData());
 
                 //修改banner
                 return bannerService.modifyBanner(bannerByJson);
-            }else {
+            } else {
                 return saveResultVO;
             }
         }
@@ -91,7 +91,7 @@ public class BannerController {
     @GetMapping("/list")
     public ResultVO list(@RequestParam("queryType") String queryType,
                          @RequestParam("pageNum") Integer pageNum,
-                         @RequestParam("pageSize")Integer pageSize) {
+                         @RequestParam("pageSize") Integer pageSize) {
         return bannerService.bannerList(queryType, pageNum, pageSize);
     }
 
@@ -100,7 +100,7 @@ public class BannerController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "bannerid", required = true)
     })
     @DeleteMapping("/delete")
-    public ResultVO delete(@RequestParam("id") Integer id){
+    public ResultVO delete(@RequestParam("id") Integer id) {
         return bannerService.deleteBanner(id);
     }
 
@@ -109,7 +109,7 @@ public class BannerController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "bannerid", required = true)
     })
     @GetMapping("/byId")
-    public ResultVO byId(@RequestParam("id") Integer id){
+    public ResultVO byId(@RequestParam("id") Integer id) {
         return bannerService.bannerById(id);
     }
 

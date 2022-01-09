@@ -36,14 +36,14 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
 
     @Override
     public ResultVO adminRegist(String name, String pwd) {
-        
+
         //查询管理员名是否已存在
         HashMap<String, Object> columnMap = new HashMap<>();
         columnMap.put("admin_name", name);
         List<Admins> adminList = adminsMapper.selectByMap(columnMap);
 
         //如果没有注册，则保存
-        if (adminList.size() == 0){
+        if (adminList.size() == 0) {
             Admins admin = new Admins();
             admin.setAdminName(name);
             String md5Pwd = MD5Utils.md5(pwd + name);
@@ -53,12 +53,12 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
 
             //注册
             int insert = adminsMapper.insert(admin);
-            if (insert == 1){
+            if (insert == 1) {
                 return new ResultVO(StatusCode.OK, "注册成功！", null);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "注册失败！", null);
             }
-        }else {
+        } else {
             return new ResultVO(StatusCode.NO, "管理员名已存在！", null);
         }
     }
@@ -72,11 +72,11 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
         List<Admins> adminList = adminsMapper.selectByMap(columnMap);
 
         //如果存在，判断密码是否正确
-        if (adminList.size() == 0){
+        if (adminList.size() == 0) {
             return new ResultVO(StatusCode.NO, "该管理员账号不存在！", null);
-        }else {
+        } else {
             String md5Pwd = MD5Utils.md5(pwd + name);
-            if (md5Pwd.equals(adminList.get(0).getAdminPwd())){
+            if (md5Pwd.equals(adminList.get(0).getAdminPwd())) {
 
                 //校验密码成功，生成token
                 JwtBuilder builder = Jwts.builder();
@@ -92,7 +92,7 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
                 returnMap.put("admin", adminList.get(0));
                 returnMap.put("token", token);
                 return new ResultVO(StatusCode.OK, "登陆成功！", returnMap);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "密码错误！", null);
             }
         }
@@ -105,7 +105,7 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
         try {
             List<Admins> adminList = adminsMapper.selectByMap(columnMap);
             return new ResultVO(StatusCode.OK, "获取信息成功！", adminList);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }
@@ -117,16 +117,16 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
 
         //判断是否输入相同昵称
         Admins adminById = adminsMapper.selectById(admin.getAdminId());
-        if (admin.getAdminNickname().equals(adminById.getAdminNickname())){
+        if (admin.getAdminNickname().equals(adminById.getAdminNickname())) {
 
             int update = adminsMapper.updateById(admin);
-            if (update == 1){
+            if (update == 1) {
                 Admins adminReturn = adminsMapper.selectById(admin.getAdminId());
                 return new ResultVO(StatusCode.OK, "修改成功！", adminReturn);
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "修改失败！", null);
             }
-        }else {
+        } else {
 
             //判断管理员昵称是否与他人重名
             HashMap<String, Object> columnMap = new HashMap<>();
@@ -134,46 +134,46 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
             List<Admins> adminList = adminsMapper.selectByMap(columnMap);
 
             //如果不重名，则修改
-            if (adminList.size() == 0){
+            if (adminList.size() == 0) {
                 int update = adminsMapper.updateById(admin);
-                if (update == 1){
+                if (update == 1) {
                     Admins adminReturn = adminsMapper.selectById(admin.getAdminId());
                     return new ResultVO(StatusCode.OK, "修改成功！", adminReturn);
-                }else {
+                } else {
                     return new ResultVO(StatusCode.NO, "修改失败！", null);
                 }
-            }else {
+            } else {
                 return new ResultVO(StatusCode.NO, "管理员昵称已存在！", null);
             }
         }
     }
 
     @Override
-    public ResultVO adminPwdModify(Integer id,String pwd, String newPwd) {
+    public ResultVO adminPwdModify(Integer id, String pwd, String newPwd) {
 
         //当前用户密码与输入密码进行比较
         Admins adminBefore = adminsMapper.selectById(id);
         String md5PwdBefore = MD5Utils.md5(pwd + adminBefore.getAdminName());
-        if (md5PwdBefore.equals(adminBefore.getAdminPwd())){
+        if (md5PwdBefore.equals(adminBefore.getAdminPwd())) {
             String md5Pwd = MD5Utils.md5(newPwd + adminBefore.getAdminName());
 
             //不能修改为相同密码
-            if (md5Pwd.equals(adminBefore.getAdminPwd())){
+            if (md5Pwd.equals(adminBefore.getAdminPwd())) {
                 return new ResultVO(StatusCode.NO, "新密码不能与原密码相同！", null);
-            }else {
+            } else {
                 Admins admin = new Admins();
                 admin.setAdminId(id);
                 admin.setAdminPwd(md5Pwd);
 
                 //修改
                 int update = adminsMapper.updateById(admin);
-                if (update == 1){
+                if (update == 1) {
                     return new ResultVO(StatusCode.OK, "修改成功，请重新登录！", null);
-                }else {
+                } else {
                     return new ResultVO(StatusCode.NO, "修改失败！", null);
                 }
             }
-        }else {
+        } else {
             return new ResultVO(StatusCode.NO, "密码输入错误！", null);
         }
     }
@@ -186,20 +186,20 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
 
         //查询条件封装
         QueryWrapper<Admins> qw = new QueryWrapper<>();
-        if (!queryType.equals("")){
+        if (!queryType.equals("")) {
 
             //判断是否有查询条件
-            if (queryType.equals("admin_id")){
-                if (!queryInfo.equals("")){
+            if (queryType.equals("admin_id")) {
+                if (!queryInfo.equals("")) {
                     try {
                         qw.eq(queryType, Integer.valueOf(queryInfo));
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println(e);
                         return new ResultVO(StatusCode.NO, "请输入合法的编号！", null);
                     }
                 }
-            }else {
-                if (!queryInfo.equals("")){
+            } else {
+                if (!queryInfo.equals("")) {
                     qw.like(queryType, queryInfo);
                 }
             }
@@ -210,7 +210,7 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
             List<Admins> adminList = adminsMapper.selectList(qw);
             PageInfo<Admins> adminPageInfo = new PageInfo<>(adminList);
             return new ResultVO(StatusCode.OK, "获取列表成功！", adminPageInfo);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }
@@ -221,9 +221,9 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
 
         //删除
         int delete = adminsMapper.deleteById(id);
-        if (delete == 1){
+        if (delete == 1) {
             return new ResultVO(StatusCode.OK, "删除成功！", null);
-        }else {
+        } else {
             return new ResultVO(StatusCode.NO, "删除失败！", null);
         }
     }
@@ -238,9 +238,9 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
 
         //修改
         int update = adminsMapper.updateById(admin);
-        if (update == 1){
+        if (update == 1) {
             return new ResultVO(StatusCode.OK, "修改头像成功！", imgName);
-        }else {
+        } else {
             return new ResultVO(StatusCode.NO, "修改头像失败！", null);
         }
     }

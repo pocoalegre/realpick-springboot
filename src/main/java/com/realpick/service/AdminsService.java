@@ -27,7 +27,7 @@ public interface AdminsService extends IService<Admins> {
     ResultVO adminModify(Admins admin);
 
     //修改密码
-    ResultVO adminPwdModify(Integer id,String pwd, String newPwd);
+    ResultVO adminPwdModify(Integer id, String pwd, String newPwd);
 
     //管理员列表
     ResultVO adminList(String queryType, String queryInfo, Integer pageNum, Integer pageSize);
