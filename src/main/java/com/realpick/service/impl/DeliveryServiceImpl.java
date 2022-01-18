@@ -11,11 +11,13 @@ import com.realpick.entity.Orders;
 import com.realpick.service.DeliveryService;
 import com.realpick.vo.ResultVO;
 import com.realpick.vo.StatusCode;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -39,20 +41,43 @@ public class DeliveryServiceImpl extends ServiceImpl<DeliveryMapper, Delivery> i
 
         //查询是否有该订单
         Integer orderId = delivery.getOrderId();
-        HashMap<String, Object> columnMap = new HashMap<>();
+        Map<String, Object> columnMap = new HashMap<>();
         columnMap.put("order_id", orderId);
         List<Orders> ordersList = ordersMapper.selectByMap(columnMap);
         if (ordersList.size() == 0) {
             return new ResultVO(StatusCode.NO, "该订单编号不存在！", null);
         }
+        if (ordersList.get(0).getStatus() == 2){
 
-        //添加
-        int insert = deliveryMapper.insert(delivery);
-        if (insert == 1) {
-            return new ResultVO(StatusCode.OK, "添加成功！", null);
-        } else {
-            return new ResultVO(StatusCode.NO, "添加失败！", null);
+            //添加
+            int insert = deliveryMapper.insert(delivery);
+            if (insert == 1) {
+
+                //变更订单状态
+                Orders order = new Orders();
+                order.setOrderId(ordersList.get(0).getOrderId());
+                order.setStatus(3);
+                int update = ordersMapper.updateById(order);
+                if (update == 1){
+                    return new ResultVO(StatusCode.OK, "添加成功！", null);
+                }else {
+                    return new ResultVO(StatusCode.NO, "订单状态修改失败！", null);
+                }
+            } else {
+                return new ResultVO(StatusCode.NO, "添加失败！", null);
+            }
+        }else if (ordersList.get(0).getStatus() == 0){
+            return new ResultVO(StatusCode.NO, "该订单已取消！", null);
+        }else if (ordersList.get(0).getStatus() == 1){
+            return new ResultVO(StatusCode.NO, "该订单待付款！", null);
+        }else if (ordersList.get(0).getStatus() == 3){
+            return new ResultVO(StatusCode.NO, "该订单已发货！", null);
+        }else if (ordersList.get(0).getStatus() == 4){
+            return new ResultVO(StatusCode.NO, "该订单已完成！", null);
+        }else {
+            return new ResultVO(StatusCode.NO, "订单异常！", null);
         }
+
     }
 
     @Override
@@ -66,14 +91,24 @@ public class DeliveryServiceImpl extends ServiceImpl<DeliveryMapper, Delivery> i
         if (ordersList.size() == 0) {
             return new ResultVO(StatusCode.NO, "该订单编号不存在！", null);
         }
-
-        //修改
-        int update = deliveryMapper.updateById(delivery);
-        if (update == 1) {
-            return new ResultVO(StatusCode.OK, "修改成功！", null);
-        } else {
-            return new ResultVO(StatusCode.NO, "修改失败！", null);
+        if (ordersList.get(0).getStatus() == 3){
+            //修改
+            int update = deliveryMapper.updateById(delivery);
+            if (update == 1) {
+                return new ResultVO(StatusCode.OK, "修改成功！", null);
+            } else {
+                return new ResultVO(StatusCode.NO, "修改失败！", null);
+            }
+        }else if (ordersList.get(0).getStatus() == 0){
+            return new ResultVO(StatusCode.NO, "该订单已取消！", null);
+        }else if (ordersList.get(0).getStatus() == 1){
+            return new ResultVO(StatusCode.NO, "该订单待付款！", null);
+        }else if (ordersList.get(0).getStatus() == 4){
+            return new ResultVO(StatusCode.NO, "该订单已完成！", null);
+        }else {
+            return new ResultVO(StatusCode.NO, "订单异常！", null);
         }
+
     }
 
     @Override
@@ -138,4 +173,22 @@ public class DeliveryServiceImpl extends ServiceImpl<DeliveryMapper, Delivery> i
         }
     }
 
+    @Override
+    public ResultVO selectByUser(Integer orderId) {
+
+        //查询
+        Map<String, Object> columnMap = new HashMap<>();
+        columnMap.put("order_id", orderId);
+        List<Delivery> deliveryList = deliveryMapper.selectByMap(columnMap);
+
+        //订单对应快递应该唯一
+        if (deliveryList.size() == 1){
+            Map<String, String> resultMap = new HashMap<>();
+            resultMap.put("nu", deliveryList.get(0).getDeliveryNu());
+            resultMap.put("com", deliveryList.get(0).getDeliveryCom());
+            return new ResultVO(StatusCode.OK, "获取信息成功！", resultMap);
+        }else {
+            return new ResultVO(StatusCode.NO, "获取信息失败！", null);
+        }
+    }
 }

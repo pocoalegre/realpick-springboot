@@ -52,4 +52,14 @@ public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, Order
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);
         }
     }
+
+    @Override
+    public ResultVO addOrderDetail(OrderDetail orderDetail) {
+        int insert = orderDetailMapper.insert(orderDetail);
+        if (insert == 1) {
+            return new ResultVO(StatusCode.OK, "添加成功！", null);
+        } else {
+            return new ResultVO(StatusCode.NO, "添加失败！", null);
+        }
+    }
 }

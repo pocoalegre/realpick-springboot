@@ -26,4 +26,16 @@ public interface OrdersService extends IService<Orders> {
     //修改订单
     ResultVO modifyOrder(Orders order);
 
+    //添加订单
+    ResultVO addOrder(Orders order);
+
+    //用户订单列表
+    ResultVO orderVOList(Integer pageNum, Integer pageSize, Integer userId);
+
+    //取消订单
+    ResultVO cancelOrder(Integer id);
+
+    //收货
+    ResultVO confirmOrder(Integer id);
+
 }

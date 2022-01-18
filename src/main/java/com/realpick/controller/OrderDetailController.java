@@ -1,6 +1,7 @@
 package com.realpick.controller;
 
 
+import com.realpick.entity.OrderDetail;
 import com.realpick.service.OrderDetailService;
 import com.realpick.vo.ResultVO;
 import io.swagger.annotations.Api;
@@ -39,6 +40,12 @@ public class OrderDetailController {
                          @RequestParam("pageNum") Integer pageNum,
                          @RequestParam("pageSize") Integer pageSize) {
         return orderDetailService.orderDetailList(queryOrderId, pageNum, pageSize);
+    }
+
+    @ApiOperation("添加接口")
+    @PostMapping("/add")
+    public ResultVO add(@RequestBody OrderDetail orderDetail) {
+        return orderDetailService.addOrderDetail(orderDetail);
     }
 
 }

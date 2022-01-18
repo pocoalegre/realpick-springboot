@@ -71,5 +71,14 @@ public class UserAddrController {
     public ResultVO delete(@RequestParam("id") Integer id) {
         return userAddrService.deleteUserAddr(id);
     }
+
+    @ApiOperation("列表接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "id", value = "用户id", required = true)
+    })
+    @GetMapping("/allList")
+    public ResultVO list(@RequestParam("id") Integer id) {
+        return userAddrService.userAddrListAll(id);
+    }
 }
 

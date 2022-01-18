@@ -12,7 +12,6 @@
         <result column="sku_id" property="skuId"/>
         <result column="sku_size" property="skuSize"/>
         <result column="sku_color" property="skuColor"/>
-        <result column="color_img" property="colorImg"/>
         <result column="buy_number" property="buyNumber"/>
         <result column="sell_price" property="sellPrice"/>
         <result column="total_amount" property="totalAmount"/>

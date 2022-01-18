@@ -67,5 +67,42 @@ public class OrdersController {
     public ResultVO modify(@RequestBody Orders order) {
         return ordersService.modifyOrder(order);
     }
+
+    @ApiOperation("添加接口")
+    @PostMapping("/add")
+    public ResultVO add(@RequestBody Orders order) {
+        return ordersService.addOrder(order);
+    }
+
+    @ApiOperation("列表接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "pageNum", value = "页码", required = true),
+            @ApiImplicitParam(dataType = "int", name = "pageSize", value = "当前页码数据条数", required = true),
+            @ApiImplicitParam(dataType = "int", name = "userId", value = "用户id", required = true)
+    })
+    @GetMapping("/voList")
+    public ResultVO voList(@RequestParam("pageNum") Integer pageNum,
+                         @RequestParam("pageSize") Integer pageSize,
+                         @RequestParam("userId") Integer userId) {
+        return ordersService.orderVOList(pageNum, pageSize, userId);
+    }
+
+    @ApiOperation("取消订单接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "id", value = "订单id", required = true)
+    })
+    @PutMapping("/cancel")
+    public ResultVO cancel(@RequestParam("id") Integer id) {
+        return ordersService.cancelOrder(id);
+    }
+
+    @ApiOperation("确认订单接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "id", value = "订单id", required = true)
+    })
+    @PutMapping("/confirm")
+    public ResultVO confirm(@RequestParam("id") Integer id) {
+        return ordersService.confirmOrder(id);
+    }
 }
 

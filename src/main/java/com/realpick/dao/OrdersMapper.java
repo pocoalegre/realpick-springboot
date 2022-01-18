@@ -1,8 +1,11 @@
 package com.realpick.dao;
 
-import com.realpick.entity.Orders;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.realpick.entity.OrderVO;
+import com.realpick.entity.Orders;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,5 +18,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrdersMapper extends BaseMapper<Orders> {
+
+    //根据用户查询订单VO
+    List<OrderVO> orderVO(Integer userId);
 
 }

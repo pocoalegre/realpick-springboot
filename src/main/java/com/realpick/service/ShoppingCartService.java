@@ -27,4 +27,7 @@ public interface ShoppingCartService extends IService<ShoppingCart> {
     //购物车查询
     ResultVO ShoppingCartVOList(Integer pageNum, Integer pageSize, Integer userId);
 
+    //清空购物车
+    ResultVO deleteAllShoppingCart(Integer id);
+
 }

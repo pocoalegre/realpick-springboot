@@ -17,4 +17,6 @@ public interface OrderDetailService extends IService<OrderDetail> {
     //订单细节列表
     ResultVO orderDetailList(String queryOrderId, Integer pageNum, Integer pageSize);
 
+    //添加订单细节
+    ResultVO addOrderDetail(OrderDetail orderDetail);
 }

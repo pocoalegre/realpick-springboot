@@ -41,14 +41,13 @@
             <result column="product_id_3" property="productId" />
             <result column="sku_size_3" property="skuSize" />
             <result column="sku_color_3" property="skuColor" />
-            <result column="color_img_3" property="colorImg" />
             <result column="deleted_3" property="deleted" />
             <result column="create_time_3" property="createTime" />
             <result column="update_time_3" property="updateTime" />
         </association>
     </resultMap>
 
-    <select id="shoppingCatVO" resultMap="ShoppingCartVO">
+    <select id="shoppingCartVO" resultMap="ShoppingCartVO">
         select t1.cart_id as cart_id_1,
                t1.user_id as user_id_1,
                t1.cart_number as cart_number_1,
@@ -71,7 +70,6 @@
                t3.product_id as product_id_3,
                t3.sku_size as sku_size_3,
                t3.sku_color as sku_color_3,
-               t3.color_img as color_img_3,
                t3.deleted as deleted_3,
                t3.create_time as create_time_3,
                t3.update_time as update_time_3

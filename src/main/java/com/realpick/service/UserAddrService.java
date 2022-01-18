@@ -29,4 +29,7 @@ public interface UserAddrService extends IService<UserAddr> {
     //删除地址
     ResultVO deleteUserAddr(Integer id);
 
+    //地址列表
+    ResultVO userAddrListAll(Integer id);
+
 }

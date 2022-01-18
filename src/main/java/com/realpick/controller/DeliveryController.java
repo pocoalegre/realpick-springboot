@@ -72,8 +72,17 @@ public class DeliveryController {
             @ApiImplicitParam(dataType = "int", name = "id", value = "快递id", required = true)
     })
     @GetMapping("/byId")
-    public ResultVO byId(Integer id) {
+    public ResultVO byId(@RequestParam("id") Integer id) {
         return deliveryService.deliveryById(id);
+    }
+
+    @ApiOperation("用户查询接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "orderId", value = "订单id", required = true)
+    })
+    @GetMapping("/byUser")
+    public ResultVO byUser(@RequestParam("orderId") Integer orderId) {
+        return deliveryService.selectByUser(orderId);
     }
 }
 

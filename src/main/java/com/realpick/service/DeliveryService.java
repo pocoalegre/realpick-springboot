@@ -29,4 +29,7 @@ public interface DeliveryService extends IService<Delivery> {
     //单条快递
     ResultVO deliveryById(Integer id);
 
+    //用户查询快递
+    ResultVO selectByUser(Integer orderId);
+
 }

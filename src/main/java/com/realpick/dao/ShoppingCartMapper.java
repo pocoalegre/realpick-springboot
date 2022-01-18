@@ -21,5 +21,5 @@ import java.util.List;
 public interface ShoppingCartMapper extends BaseMapper<ShoppingCart> {
 
     //根据用户查询购物车VO类
-    List<ShoppingCartVO> shoppingCatVO(Integer userId);
+    List<ShoppingCartVO> shoppingCartVO(Integer userId);
 }

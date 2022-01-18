@@ -193,4 +193,21 @@ public class UserAddrServiceImpl extends ServiceImpl<UserAddrMapper, UserAddr> i
             }
         }
     }
+
+    @Override
+    public ResultVO userAddrListAll(Integer id) {
+
+        //查询条件封装
+        QueryWrapper<UserAddr> qw = new QueryWrapper<>();
+        qw.eq("user_id", id);
+
+        //查询列表并分页
+        try {
+            List<UserAddr> userAddrList = userAddrMapper.selectList(qw);
+            return new ResultVO(StatusCode.OK, "获取列表成功！", userAddrList);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取列表失败！", null);
+        }
+    }
 }

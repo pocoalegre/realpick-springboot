@@ -100,12 +100,30 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
 
         try {
             //查询列表并分页
-            List<ShoppingCartVO> shoppingCartVOList = shoppingCartMapper.shoppingCatVO(userId);
+            List<ShoppingCartVO> shoppingCartVOList = shoppingCartMapper.shoppingCartVO(userId);
             PageInfo<ShoppingCartVO> shoppingCartVOPageInfo = new PageInfo<>(shoppingCartVOList);
             return new ResultVO(StatusCode.OK, "获取信息成功！", shoppingCartVOPageInfo);
         } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取信息失败！", null);
         }
+    }
+
+    @Override
+    public ResultVO deleteAllShoppingCart(Integer id) {
+
+        //查询当前用户所有购物车
+        HashMap<String, Object> columnMap = new HashMap<>();
+        columnMap.put("user_id", id);
+
+        //清空购物车
+        List<ShoppingCart> shoppingCartList = shoppingCartMapper.selectByMap(columnMap);
+        for (ShoppingCart shoppingCart : shoppingCartList) {
+            int delete = shoppingCartMapper.deleteById(shoppingCart.getCartId());
+            if (delete != 1) {
+                return new ResultVO(StatusCode.NO, "购物车未知错误！", null);
+            }
+        }
+        return new ResultVO(StatusCode.OK, "清空成功！", null);
     }
 }

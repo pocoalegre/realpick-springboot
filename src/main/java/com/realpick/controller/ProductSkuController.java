@@ -66,52 +66,14 @@ public class ProductSkuController {
 
     @ApiOperation("修改接口")
     @PutMapping("/modify")
-    public ResultVO modify(MultipartFile file, String productSku) {
-
-        //json对象转换
-        ProductSku productSkuByJson = JSON.parseObject(productSku, ProductSku.class);
-
-        //非空字段
-        if (file == null) {
-            return productSkuService.modifyProductSku(productSkuByJson);
-        } else {
-
-            //上传文件
-            ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/product/sku");
-            if (saveResultVO.getCode() == 10000) {
-                productSkuByJson.setColorImg((String) saveResultVO.getData());
-
-                //添加sku图片
-                return productSkuService.modifyProductSku(productSkuByJson);
-            } else {
-                return saveResultVO;
-            }
-        }
+    public ResultVO modify(@RequestBody ProductSku productSku) {
+        return productSkuService.modifyProductSku(productSku);
     }
 
     @ApiOperation("添加接口")
     @PostMapping("/add")
-    public ResultVO add(MultipartFile file, String productSku) {
-
-        //json对象转换
-        ProductSku productSkuByJson = JSON.parseObject(productSku, ProductSku.class);
-
-        //非空字段
-        if (file == null) {
-            return new ResultVO(StatusCode.NO, "必须上传图片！", null);
-        } else {
-
-            //上传文件
-            ResultVO saveResultVO = FileManage.fileUpload(file, "static/uploadImg/product/sku");
-            if (saveResultVO.getCode() == 10000) {
-                productSkuByJson.setColorImg((String) saveResultVO.getData());
-
-                //添加sku图片
-                return productSkuService.addProductSku(productSkuByJson);
-            } else {
-                return saveResultVO;
-            }
-        }
+    public ResultVO add(@RequestBody ProductSku productSku) {
+        return productSkuService.addProductSku(productSku);
     }
 
     @ApiOperation("查询单条商品sku")

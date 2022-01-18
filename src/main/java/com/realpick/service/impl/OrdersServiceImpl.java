@@ -6,15 +6,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.realpick.dao.OrderDetailMapper;
 import com.realpick.dao.OrdersMapper;
+import com.realpick.entity.OrderVO;
 import com.realpick.entity.Orders;
+import com.realpick.entity.ShoppingCartVO;
 import com.realpick.service.OrdersService;
 import com.realpick.vo.ResultVO;
 import com.realpick.vo.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -105,11 +106,87 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 
     @Override
     public ResultVO modifyOrder(Orders order) {
-        int update = ordersMapper.updateById(order);
-        if (update == 1) {
-            return new ResultVO(StatusCode.OK, "修改成功！", null);
-        } else {
+
+        //代发货或者发货期间 可以修改收货信息
+        if (order.getStatus() == 2 || order.getStatus() == 3){
+            int update = ordersMapper.updateById(order);
+            if (update == 1) {
+                return new ResultVO(StatusCode.OK, "修改成功！", null);
+            } else {
+                return new ResultVO(StatusCode.NO, "修改失败！", null);
+            }
+        }else {
             return new ResultVO(StatusCode.NO, "修改失败！", null);
+        }
+
+    }
+
+    @Override
+    public ResultVO addOrder(Orders order) {
+
+        //设置订单编号
+        String orderNumber = UUID.randomUUID().toString().replace("-", "").toUpperCase().substring(0,20);
+        order.setOrderNumber(orderNumber);
+
+        //设置提交时间
+        order.setSubmitTime(new Date());
+        int insert = ordersMapper.insert(order);
+        if (insert == 1) {
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("orderId", order.getOrderId());
+            resultMap.put("orderNumber", order.getOrderNumber());
+            return new ResultVO(StatusCode.OK, "添加成功！", resultMap);
+        } else {
+            return new ResultVO(StatusCode.NO, "添加失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO orderVOList(Integer pageNum, Integer pageSize, Integer userId) {
+
+        //分页设置
+        PageHelper.startPage(pageNum, pageSize);
+
+        try {
+            //查询列表并分页
+            List<OrderVO> orderVOList = ordersMapper.orderVO(userId);
+            PageInfo<OrderVO> orderVOPageInfo = new PageInfo<>(orderVOList);
+            return new ResultVO(StatusCode.OK, "获取信息成功！", orderVOPageInfo);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取信息失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO cancelOrder(Integer id) {
+
+        //设置订单状态
+        Orders order = new Orders();
+        order.setOrderId(id);
+        order.setStatus(0);
+
+        int update = ordersMapper.updateById(order);
+        if (update == 1){
+            return new ResultVO(StatusCode.OK, "取消成功！", null);
+        }else {
+            return new ResultVO(StatusCode.NO, "取消失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO confirmOrder(Integer id) {
+
+        //设置订单状态
+        Orders order = new Orders();
+        order.setOrderId(id);
+        order.setStatus(4);
+
+        int update = ordersMapper.updateById(order);
+        if (update == 1){
+            return new ResultVO(StatusCode.OK, "确认成功！", null);
+        }else {
+            return new ResultVO(StatusCode.NO, "确认异常！", null);
         }
     }
 }

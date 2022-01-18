@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,6 +67,15 @@ public class ShoppingCartController {
                          @RequestParam("pageSize") Integer pageSize,
                          @RequestParam("userId") Integer userId) {
         return shoppingCartService.ShoppingCartVOList(pageNum, pageSize, userId);
+    }
+
+    @ApiOperation("清空接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "userId", value = "用户id", required = true)
+    })
+    @DeleteMapping("/deleteAll")
+    public ResultVO deleteAll(@RequestParam("userId") Integer userId) {
+        return shoppingCartService.deleteAllShoppingCart(userId);
     }
 
 }

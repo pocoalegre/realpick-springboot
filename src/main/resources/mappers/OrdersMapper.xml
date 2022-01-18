@@ -26,4 +26,82 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
+    <resultMap id="OrderVO" type="com.realpick.entity.OrderVO">
+        <id column="order_id_1" property="orderId"/>
+        <result column="order_number_1" property="orderNumber"/>
+        <result column="user_id_1" property="userId"/>
+        <result column="receiver_name_1" property="receiverName"/>
+        <result column="receiver_tel_1" property="receiverTel"/>
+        <result column="receiver_addr_1" property="receiverAddr"/>
+        <result column="pay_type_1" property="payType"/>
+        <result column="total_amount_1" property="totalAmount"/>
+        <result column="actual_amount_1" property="actualAmount"/>
+        <result column="order_remark_1" property="orderRemark"/>
+        <result column="submit_time_1" property="submitTime"/>
+        <result column="cancel_time_1" property="cancelTime"/>
+        <result column="pay_time_1" property="payTime"/>
+        <result column="deliver_time_1" property="deliverTime"/>
+        <result column="receive_time_1" property="receiveTime"/>
+        <result column="finish_time_1" property="finishTime"/>
+        <result column="status_1" property="status"/>
+        <result column="deleted_1" property="deleted"/>
+        <result column="create_time_1" property="createTime"/>
+        <result column="update_time_1" property="updateTime"/>
+        <association property="orderDetail" javaType="com.realpick.entity.OrderDetail">
+            <id column="detail_id_2" property="detailId"/>
+            <result column="order_id_2" property="orderId"/>
+            <result column="product_id_2" property="productId"/>
+            <result column="product_name_2" property="productName"/>
+            <result column="product_img_2" property="productImg"/>
+            <result column="sku_id_2" property="skuId"/>
+            <result column="sku_size_2" property="skuSize"/>
+            <result column="sku_color_2" property="skuColor"/>
+            <result column="buy_number_2" property="buyNumber"/>
+            <result column="sell_price_2" property="sellPrice"/>
+            <result column="total_amount_2" property="totalAmount"/>
+            <result column="deleted_2" property="deleted"/>
+            <result column="create_time_2" property="createTime"/>
+            <result column="update_time_2" property="updateTime"/>
+        </association>
+    </resultMap>
+
+    <select id="orderVO" resultMap="OrderVO">
+        select t1.order_id as order_id_1,
+               t1.order_number as order_number_1,
+               t1.user_id as user_id_1,
+               t1.receiver_name as receiver_name_1,
+               t1.receiver_tel as receiver_tel_1,
+               t1.receiver_addr as receiver_addr_1,
+               t1.pay_type as pay_type_1,
+               t1.total_amount as total_amount_1,
+               t1.actual_amount as actual_amount_1,
+               t1.order_remark as order_remark_1,
+               t1.submit_time as submit_time_1,
+               t1.cancel_time as cancel_time_1,
+               t1.pay_time as pay_time_1,
+               t1.deliver_time as deliver_time_1,
+               t1.receive_time as receive_time_1,
+               t1.finish_time as finish_time_1,
+               t1.status as status_1,
+               t1.deleted as deleted_1,
+               t1.create_time as create_time_1,
+               t1.update_time as update_time_1,
+               t2.detail_id as detail_id_2,
+               t2.order_id as order_id_2,
+               t2.product_id as product_id_2,
+               t2.product_name as product_name_2,
+               t2.product_img as product_img_2,
+               t2.sku_id as sku_id_2,
+               t2.sku_size as sku_size_2,
+               t2.sku_color as sku_color_2,
+               t2.buy_number as buy_number_2,
+               t2.sell_price as sell_price_2,
+               t2.total_amount as total_amount_2,
+               t2.deleted as deleted_2,
+               t2.create_time as create_time_2,
+               t2.update_time as update_time_2
+        from orders t1 left join order_detail t2 on t1.order_id = t2.order_id
+        where t1.user_id = #{userId} and t1.deleted = 0
+    </select>
+
 </mapper>

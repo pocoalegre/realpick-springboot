@@ -31,6 +31,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         addPath.add("/shoppingCart/**");
         addPath.add("/userAddr/**");
         addPath.add("/user/**");
+        addPath.add("/pay");
 
         List<String> excludePath = new ArrayList<>();
         excludePath.add("/admin/regist");

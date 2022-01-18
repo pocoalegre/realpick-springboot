@@ -50,9 +50,6 @@ public class OrderDetail implements Serializable {
     @ApiModelProperty(value = "商品颜色")
     private String skuColor;
 
-    @ApiModelProperty(value = "颜色图片")
-    private String colorImg;
-
     @ApiModelProperty(value = "购买数量")
     private Integer buyNumber;
 
