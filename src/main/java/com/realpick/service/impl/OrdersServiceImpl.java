@@ -8,7 +8,6 @@ import com.realpick.dao.OrderDetailMapper;
 import com.realpick.dao.OrdersMapper;
 import com.realpick.entity.OrderVO;
 import com.realpick.entity.Orders;
-import com.realpick.entity.ShoppingCartVO;
 import com.realpick.service.OrdersService;
 import com.realpick.vo.ResultVO;
 import com.realpick.vo.StatusCode;
@@ -188,5 +187,18 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
         }else {
             return new ResultVO(StatusCode.NO, "确认异常！", null);
         }
+    }
+
+    @Override
+    public void paySuccess(String orderNumber) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("order_number", orderNumber);
+
+        //设置付款完成
+        List<Orders> ordersList = ordersMapper.selectByMap(map);
+        Orders order = ordersList.get(0);
+        order.setStatus(2);
+        ordersMapper.updateById(order);
     }
 }

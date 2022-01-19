@@ -6,13 +6,21 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.realpick.config.AlipayConfig;
 import com.realpick.entity.AlipayVO;
+import com.realpick.service.OrdersService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/pay")
 @CrossOrigin
 public class AlipayController {
+
+    @Autowired
+    private OrdersService ordersService;
 
     @ApiOperation("支付接口")
     @PostMapping("/alipay")
@@ -45,6 +53,16 @@ public class AlipayController {
         String result = alipayClient.pageExecute(alipayRequest).getBody();
 
         return result;
+    }
+
+    @PostMapping("/notify")
+    public void notify(HttpServletRequest request, HttpServletResponse response) throws Exception{
+
+        //商户订单号
+        String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+
+        ordersService.paySuccess(out_trade_no);
+
     }
 
 }
