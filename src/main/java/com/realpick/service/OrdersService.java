@@ -39,6 +39,6 @@ public interface OrdersService extends IService<Orders> {
     ResultVO confirmOrder(Integer id);
 
     //付款成功
-    void paySuccess(String orderNumber);
+    void paySuccess(String orderNumber, String total_amount);
 
 }

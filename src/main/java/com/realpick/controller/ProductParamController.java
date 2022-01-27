@@ -72,7 +72,7 @@ public class ProductParamController {
         return productParamService.addProductParam(productParam);
     }
 
-    @ApiOperation("查询单条商品参数")
+    @ApiOperation("单条商品参数接口")
     @GetMapping("/byProductId")
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)

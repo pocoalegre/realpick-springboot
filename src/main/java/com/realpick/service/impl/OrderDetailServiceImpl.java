@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.realpick.dao.OrderDetailMapper;
+import com.realpick.dao.ProductMapper;
 import com.realpick.entity.OrderDetail;
+import com.realpick.entity.Product;
 import com.realpick.service.OrderDetailService;
 import com.realpick.vo.ResultVO;
 import com.realpick.vo.StatusCode;
@@ -27,6 +29,9 @@ public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, Order
 
     @Autowired
     private OrderDetailMapper orderDetailMapper;
+
+    @Autowired
+    private ProductMapper productMapper;
 
     @Override
     public ResultVO orderDetailList(String queryOrderId, Integer pageNum, Integer pageSize) {
@@ -57,6 +62,14 @@ public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, Order
     public ResultVO addOrderDetail(OrderDetail orderDetail) {
         int insert = orderDetailMapper.insert(orderDetail);
         if (insert == 1) {
+            Product productBefore = productMapper.selectById(orderDetail.getProductId());
+
+            //扣减库存
+            Product product = new Product();
+            product.setProductId(productBefore.getProductId());
+            product.setProductStock(productBefore.getProductStock() - orderDetail.getBuyNumber());
+            productMapper.updateById(product);
+
             return new ResultVO(StatusCode.OK, "添加成功！", null);
         } else {
             return new ResultVO(StatusCode.NO, "添加失败！", null);

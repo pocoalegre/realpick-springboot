@@ -33,4 +33,19 @@ public interface ProductSkuService extends IService<ProductSku> {
     //查询单件商品sku
     ResultVO productSkuByProductId(Integer id);
 
+    //获取sku尺寸列表
+    ResultVO productSkuSizeList(Integer id);
+
+    //获取sku颜色列表
+    ResultVO productSkuColorList(Integer id);
+
+    //二次获取sku颜色列表
+    ResultVO reProductSkuColorList(Integer id, String skuSize);
+
+    //二次获取sku尺寸列表
+    ResultVO reProductSkuSizeList(Integer id, String skuColor);
+
+    //根据商品id、sku尺寸和颜色查询id
+    ResultVO selectIdByThree(Integer productId, String skuSize, String skuColor);
+
 }

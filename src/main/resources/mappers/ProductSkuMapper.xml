@@ -13,4 +13,28 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
+    <select id="skuSizeList" resultType="java.lang.String">
+        select distinct sku_size
+        from product_sku
+        where product_id = #{productId} and deleted = 0
+    </select>
+
+    <select id="skuColorList" resultType="java.lang.String">
+        select distinct sku_color
+        from product_sku
+        where product_id = #{productId} and deleted = 0
+    </select>
+
+    <select id="reSkuColorList" resultType="java.lang.String">
+        select distinct sku_color
+        from product_sku
+        where product_id = #{productId} and sku_size = #{skuSize} and deleted = 0
+    </select>
+
+    <select id="reSkuSizeList" resultType="java.lang.String">
+        select distinct sku_size
+        from product_sku
+        where product_id = #{productId} and sku_color = #{skuColor} and deleted = 0
+    </select>
+
 </mapper>

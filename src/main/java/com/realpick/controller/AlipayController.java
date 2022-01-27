@@ -61,7 +61,9 @@ public class AlipayController {
         //商户订单号
         String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 
-        ordersService.paySuccess(out_trade_no);
+        String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"),"UTF-8");
+
+        ordersService.paySuccess(out_trade_no, total_amount);
 
     }
 

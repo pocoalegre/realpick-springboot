@@ -76,13 +76,66 @@ public class ProductSkuController {
         return productSkuService.addProductSku(productSku);
     }
 
-    @ApiOperation("查询单条商品sku")
+    @ApiOperation("单条商品sku接口")
     @GetMapping("/byProductId")
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)
     })
-    public ResultVO byProductId(Integer id) {
+    public ResultVO byProductId(@RequestParam("id") Integer id) {
         return productSkuService.productSkuByProductId(id);
+    }
+
+    @ApiOperation("商品sku尺寸列表接口")
+    @GetMapping("/skuSizeList")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)
+    })
+    public ResultVO skuSizeList(@RequestParam("id") Integer id) {
+        return productSkuService.productSkuSizeList(id);
+    }
+
+    @ApiOperation("商品sku颜色列表接口")
+    @GetMapping("/skuColorList")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)
+    })
+    public ResultVO skuColorList(@RequestParam("id") Integer id) {
+        return productSkuService.productSkuColorList(id);
+    }
+
+    @ApiOperation("re商品sku颜色列表接口")
+    @GetMapping("/reSkuColorList")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true),
+            @ApiImplicitParam(dataType = "string", name = "skuSize", value = "sku尺寸", required = true)
+    })
+    public ResultVO reSkuColorList(@RequestParam("id") Integer id,
+                                   @RequestParam("skuSize") String skuSize) {
+        return productSkuService.reProductSkuColorList(id, skuSize);
+    }
+
+    @ApiOperation("re商品sku尺寸列表接口")
+    @GetMapping("/reSkuSizeList")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true),
+            @ApiImplicitParam(dataType = "string", name = "skuColor", value = "sku颜色", required = true)
+    })
+    public ResultVO reSkuSizeList(@RequestParam("id") Integer id,
+                                  @RequestParam("skuColor") String skuColor) {
+        return productSkuService.reProductSkuSizeList(id, skuColor);
+    }
+
+    @ApiOperation("查询id接口")
+    @GetMapping("/selectId")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "productId", value = "商品id", required = true),
+            @ApiImplicitParam(dataType = "string", name = "skuSize", value = "sku尺寸", required = true),
+            @ApiImplicitParam(dataType = "string", name = "skuColor", value = "sku颜色", required = true),
+    })
+    public ResultVO selectId(@RequestParam("productId") Integer productId,
+                             @RequestParam("skuSize") String skuSize,
+                             @RequestParam("skuCOlor") String skuColor) {
+        return productSkuService.selectIdByThree(productId, skuSize, skuColor);
     }
 }
 

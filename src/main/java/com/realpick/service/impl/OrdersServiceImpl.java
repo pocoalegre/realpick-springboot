@@ -6,14 +6,18 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.realpick.dao.OrderDetailMapper;
 import com.realpick.dao.OrdersMapper;
+import com.realpick.dao.ProductMapper;
+import com.realpick.entity.OrderDetail;
 import com.realpick.entity.OrderVO;
 import com.realpick.entity.Orders;
+import com.realpick.entity.Product;
 import com.realpick.service.OrdersService;
 import com.realpick.vo.ResultVO;
 import com.realpick.vo.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -32,6 +36,9 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 
     @Autowired
     private OrderDetailMapper orderDetailMapper;
+
+    @Autowired
+    private ProductMapper productMapper;
 
     @Override
     public ResultVO orderList(String queryType, String queryInfo, Integer pageNum, Integer pageSize) {
@@ -167,6 +174,21 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 
         int update = ordersMapper.updateById(order);
         if (update == 1){
+
+            //获取订单细节
+            Map<String, Object> map = new HashMap<>();
+            map.put("order_id", id);
+            OrderDetail orderDetail = orderDetailMapper.selectByMap(map).get(0);
+
+            //查询商品
+            Product productBefore = productMapper.selectById(orderDetail.getProductId());
+
+            //还原库存
+            Product product = new Product();
+            product.setProductId(productBefore.getProductId());
+            product.setProductStock(productBefore.getProductStock() + orderDetail.getBuyNumber());
+            productMapper.updateById(product);
+
             return new ResultVO(StatusCode.OK, "取消成功！", null);
         }else {
             return new ResultVO(StatusCode.NO, "取消失败！", null);
@@ -190,15 +212,19 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
     }
 
     @Override
-    public void paySuccess(String orderNumber) {
+    public void paySuccess(String orderNumber, String total_amount) {
 
         Map<String, Object> map = new HashMap<>();
         map.put("order_number", orderNumber);
+
+        //转换金额
+        BigDecimal total_amount1 = new BigDecimal(total_amount);
 
         //设置付款完成
         List<Orders> ordersList = ordersMapper.selectByMap(map);
         Orders order = ordersList.get(0);
         order.setStatus(2);
+        order.setTotalAmount(total_amount1);
         ordersMapper.updateById(order);
     }
 }

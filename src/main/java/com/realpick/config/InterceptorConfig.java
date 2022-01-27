@@ -31,7 +31,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         addPath.add("/shoppingCart/**");
         addPath.add("/userAddr/**");
         addPath.add("/user/**");
-        addPath.add("/pay");
+        addPath.add("/pay/**");
 
         List<String> excludePath = new ArrayList<>();
         excludePath.add("/admin/regist");
@@ -44,6 +44,10 @@ public class InterceptorConfig implements WebMvcConfigurer {
         excludePath.add("/product/voById");
         excludePath.add("/productParam/byProductId");
         excludePath.add("/productSku/byProductId");
+        excludePath.add("/productSku/skuSizeList");
+        excludePath.add("/productSku/skuColorList");
+        excludePath.add("/productSku/reSkuColorList");
+        excludePath.add("/productSku/reSkuSizeList");
         excludePath.add("/user/regist");
         excludePath.add("/user/login");
         excludePath.add("/user/createCode");

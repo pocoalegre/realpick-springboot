@@ -1,6 +1,7 @@
 package com.realpick.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.realpick.dao.ProductMapper;
@@ -14,8 +15,10 @@ import com.realpick.vo.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -129,6 +132,80 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
         try {
             List<ProductSku> productSkuList = productSkuMapper.selectByMap(columnMap);
             return new ResultVO(StatusCode.OK, "获取列表成功！", productSkuList);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取信息失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO productSkuSizeList(Integer id) {
+
+        //sizeList
+        List<String> skuSizeList = null;
+        try {
+            skuSizeList = productSkuMapper.skuSizeList(id);
+            return new ResultVO(StatusCode.OK, "获取列表成功！", skuSizeList);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取信息失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO productSkuColorList(Integer id) {
+
+        //colorList
+        List<String> skuColorList = null;
+        try {
+            skuColorList = productSkuMapper.skuColorList(id);
+            return new ResultVO(StatusCode.OK, "获取列表成功！", skuColorList);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取信息失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO reProductSkuColorList(Integer id, String skuSize) {
+
+        //colorList
+        List<String> skuColorList = null;
+        try {
+            skuColorList = productSkuMapper.reSkuColorList(id, skuSize);
+            return new ResultVO(StatusCode.OK, "获取列表成功！", skuColorList);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取信息失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO reProductSkuSizeList(Integer id, String skuColor) {
+
+        //sizeList
+        List<String> skuSizeList = null;
+        try {
+            skuSizeList = productSkuMapper.reSkuSizeList(id, skuColor);
+            return new ResultVO(StatusCode.OK, "获取列表成功！", skuSizeList);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取信息失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO selectIdByThree(Integer productId, String skuSize, String skuColor) {
+
+        //查询条件
+        Map<String, Object> columnMap = new HashMap<>();
+        columnMap.put("product_id", productId);
+        columnMap.put("sku_size", skuSize);
+        columnMap.put("sku_color", skuColor);
+
+        try {
+            Integer skuId = productSkuMapper.selectByMap(columnMap).get(0).getSkuId();
+            return new ResultVO(StatusCode.OK, "获取信息成功！", skuId);
         } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取信息失败！", null);
