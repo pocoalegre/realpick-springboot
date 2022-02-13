@@ -123,5 +123,11 @@ public class CategoryController {
     public ResultVO indexList() {
         return categoryService.categoryIndexList();
     }
+
+    @ApiOperation("类型展示接口")
+    @GetMapping("/showList")
+    public ResultVO showList() {
+        return categoryService.categoryShow();
+    }
 }
 

@@ -3,6 +3,7 @@ package com.realpick.service;
 import com.realpick.entity.Product;
 import com.realpick.entity.ProductSku;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.realpick.entity.ProductSkuVO;
 import com.realpick.vo.ResultVO;
 
 /**
@@ -46,6 +47,6 @@ public interface ProductSkuService extends IService<ProductSku> {
     ResultVO reProductSkuSizeList(Integer id, String skuColor);
 
     //根据商品id、sku尺寸和颜色查询id
-    ResultVO selectIdByThree(Integer productId, String skuSize, String skuColor);
+    ResultVO selectIdByThree(ProductSkuVO productSkuVO);
 
 }

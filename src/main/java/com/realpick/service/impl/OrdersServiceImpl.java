@@ -171,6 +171,8 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
         Orders order = new Orders();
         order.setOrderId(id);
         order.setStatus(0);
+        order.setCancelTime(new Date());
+        order.setFinishTime(new Date());
 
         int update = ordersMapper.updateById(order);
         if (update == 1){
@@ -202,6 +204,8 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
         Orders order = new Orders();
         order.setOrderId(id);
         order.setStatus(4);
+        order.setReceiveTime(new Date());
+        order.setFinishTime(new Date());
 
         int update = ordersMapper.updateById(order);
         if (update == 1){
@@ -218,13 +222,15 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
         map.put("order_number", orderNumber);
 
         //转换金额
-        BigDecimal total_amount1 = new BigDecimal(total_amount);
+        BigDecimal actualAmount = new BigDecimal(total_amount);
 
         //设置付款完成
         List<Orders> ordersList = ordersMapper.selectByMap(map);
         Orders order = ordersList.get(0);
         order.setStatus(2);
-        order.setTotalAmount(total_amount1);
+        order.setPayType(1);
+        order.setPayTime(new Date());
+        order.setActualAmount(actualAmount);
         ordersMapper.updateById(order);
     }
 }

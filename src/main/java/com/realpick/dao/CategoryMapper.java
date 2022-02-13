@@ -2,7 +2,10 @@ package com.realpick.dao;
 
 import com.realpick.entity.Category;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.realpick.entity.CategoryVO;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,5 +18,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CategoryMapper extends BaseMapper<Category> {
+
+    //查询类型表格
+    List<CategoryVO> CategoryVO();
 
 }

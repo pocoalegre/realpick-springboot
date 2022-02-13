@@ -31,4 +31,7 @@ public interface CategoryService extends IService<Category> {
 
     //首页类型展示
     ResultVO categoryIndexList();
+
+    //类型展示
+    ResultVO categoryShow();
 }

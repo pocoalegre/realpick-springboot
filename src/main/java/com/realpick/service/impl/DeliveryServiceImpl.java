@@ -15,6 +15,7 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,7 @@ public class DeliveryServiceImpl extends ServiceImpl<DeliveryMapper, Delivery> i
                 Orders order = new Orders();
                 order.setOrderId(ordersList.get(0).getOrderId());
                 order.setStatus(3);
+                order.setDeliverTime(new Date());
                 int update = ordersMapper.updateById(order);
                 if (update == 1){
                     return new ResultVO(StatusCode.OK, "添加成功！", null);

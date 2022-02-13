@@ -3,6 +3,7 @@ package com.realpick.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.realpick.entity.ProductSku;
+import com.realpick.entity.ProductSkuVO;
 import com.realpick.service.ProductSkuService;
 import com.realpick.utils.FileManage;
 import com.realpick.vo.ResultVO;
@@ -126,16 +127,9 @@ public class ProductSkuController {
     }
 
     @ApiOperation("查询id接口")
-    @GetMapping("/selectId")
-    @ApiImplicitParams({
-            @ApiImplicitParam(dataType = "int", name = "productId", value = "商品id", required = true),
-            @ApiImplicitParam(dataType = "string", name = "skuSize", value = "sku尺寸", required = true),
-            @ApiImplicitParam(dataType = "string", name = "skuColor", value = "sku颜色", required = true),
-    })
-    public ResultVO selectId(@RequestParam("productId") Integer productId,
-                             @RequestParam("skuSize") String skuSize,
-                             @RequestParam("skuCOlor") String skuColor) {
-        return productSkuService.selectIdByThree(productId, skuSize, skuColor);
+    @PostMapping("/selectId")
+    public ResultVO selectId(@RequestBody ProductSkuVO productSkuVO) {
+        return productSkuService.selectIdByThree(productSkuVO);
     }
 }
 

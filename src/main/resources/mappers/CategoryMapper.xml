@@ -14,4 +14,36 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
+    <resultMap id="CategoryVO" type="com.realpick.entity.CategoryVO">
+        <id column="category_id_1" property="categoryId"/>
+        <result column="category_name_1" property="categoryName"/>
+        <result column="category_level_1" property="categoryLevel"/>
+        <collection property="categoryList" ofType="com.realpick.entity.Category">
+            <id column="category_id_2" property="categoryId"/>
+            <result column="category_name_2" property="categoryName"/>
+            <result column="category_level_2" property="categoryLevel"/>
+            <result column="parent_id_2" property="parentId"/>
+            <result column="img_url_2" property="imgUrl"/>
+            <result column="deleted_2" property="deleted"/>
+            <result column="create_time_2" property="createTime"/>
+            <result column="update_time_2" property="updateTime"/>
+        </collection>
+    </resultMap>
+
+    <select id="CategoryVO" resultMap="CategoryVO">
+        select t1.category_id as category_id_1,
+               t1.category_name as category_name_1,
+               t1.category_level as category_level_1,
+               t2.category_id as category_id_2,
+               t2.category_name as category_name_2,
+               t2.category_level as category_level_2,
+               t2.parent_id as parent_id_2,
+               t2.img_url as img_url_2,
+               t2.deleted as deleted_2,
+               t2.create_time as create_time_2,
+               t2.update_time as update_time_2
+        from category t1 left join category t2 on t1.category_id = t2.parent_id
+        where t1.deleted = 0 and t2.deleted = 0
+    </select>
+
 </mapper>

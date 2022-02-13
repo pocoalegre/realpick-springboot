@@ -39,6 +39,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         excludePath.add("/admin/createCode");
         excludePath.add("/banner/indexList");
         excludePath.add("/category/indexList");
+        excludePath.add("/category/showList");
         excludePath.add("/product/indexList");
         excludePath.add("/product/listByCategory");
         excludePath.add("/product/voById");
@@ -48,9 +49,11 @@ public class InterceptorConfig implements WebMvcConfigurer {
         excludePath.add("/productSku/skuColorList");
         excludePath.add("/productSku/reSkuColorList");
         excludePath.add("/productSku/reSkuSizeList");
+        excludePath.add("/productSku//selectId");
         excludePath.add("/user/regist");
         excludePath.add("/user/login");
         excludePath.add("/user/createCode");
+        excludePath.add("/pay/notify");
 
         //设置拦截规则
         registry.addInterceptor(checkToeknInterceptor)

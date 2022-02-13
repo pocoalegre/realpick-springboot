@@ -126,11 +126,13 @@ public class ProductController {
     @GetMapping("/listByCategory")
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "int", name = "pageNum", value = "页码", required = true),
-            @ApiImplicitParam(dataType = "int", name = "pageSize", value = "当前页码数据条数", required = true)
+            @ApiImplicitParam(dataType = "int", name = "pageSize", value = "当前页码数据条数", required = true),
+            @ApiImplicitParam(dataType = "int", name = "categoryId", value = "当前页码数据条数", required = true)
     })
     public ResultVO listByCategory(@RequestParam("pageNum") Integer pageNum,
-                                   @RequestParam("pageSize") Integer pageSize) {
-        return productService.productListByCategory(pageNum, pageSize);
+                                   @RequestParam("pageSize") Integer pageSize,
+                                   @RequestParam("categoryId") Integer categoryId) {
+        return productService.productListByCategory(pageNum, pageSize, categoryId);
     }
 
     @ApiOperation("商品VO接口")

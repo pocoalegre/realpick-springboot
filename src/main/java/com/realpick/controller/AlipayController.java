@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/pay")
@@ -56,12 +55,14 @@ public class AlipayController {
     }
 
     @PostMapping("/notify")
-    public void notify(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public void notify(HttpServletRequest request) throws Exception {
+
+        System.out.println("-------------------------------------");
 
         //商户订单号
-        String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+        String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"), "UTF-8");
 
-        String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"),"UTF-8");
+        String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"), "UTF-8");
 
         ordersService.paySuccess(out_trade_no, total_amount);
 

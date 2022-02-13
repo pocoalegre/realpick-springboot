@@ -33,11 +33,10 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
     public ResultVO addShoppingCart(ShoppingCart shoppingCart) {
 
         //查询条件
-        Integer userId = shoppingCart.getUserId();
-        Integer productIdByUser = shoppingCart.getProductId();
         HashMap<String, Object> columnMap = new HashMap<>();
-        columnMap.put("user_id", userId);
-        columnMap.put("product_id", productIdByUser);
+        columnMap.put("user_id", shoppingCart.getUserId());
+        columnMap.put("product_id", shoppingCart.getProductId());
+        columnMap.put("sku_id", shoppingCart.getSkuId());
         List<ShoppingCart> shoppingCartList = shoppingCartMapper.selectByMap(columnMap);
 
         //判断该商品在该用户购物车中中是否存在

@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.realpick.dao.CategoryMapper;
 import com.realpick.entity.Category;
+import com.realpick.entity.CategoryVO;
 import com.realpick.service.CategoryService;
 import com.realpick.vo.ResultVO;
 import com.realpick.vo.StatusCode;
@@ -158,6 +159,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
             List<Category> categoryList = categoryMapper.selectList(qw);
             return new ResultVO(StatusCode.OK, "获取列表成功！", categoryList);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取列表失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO categoryShow() {
+        try {
+            List<CategoryVO> categoryVOList = categoryMapper.CategoryVO();
+            return new ResultVO(StatusCode.OK, "获取列表成功！", categoryVOList);
         } catch (Exception e) {
             System.out.println(e);
             return new ResultVO(StatusCode.NO, "获取列表失败！", null);

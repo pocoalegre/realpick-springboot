@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.realpick.dao.OrderDetailMapper;
+import com.realpick.dao.OrdersMapper;
 import com.realpick.dao.ProductMapper;
 import com.realpick.entity.OrderDetail;
 import com.realpick.entity.Product;
@@ -33,6 +34,9 @@ public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, Order
     @Autowired
     private ProductMapper productMapper;
 
+    @Autowired
+    private OrdersMapper ordersMapper;
+
     @Override
     public ResultVO orderDetailList(String queryOrderId, Integer pageNum, Integer pageSize) {
 
@@ -60,19 +64,31 @@ public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, Order
 
     @Override
     public ResultVO addOrderDetail(OrderDetail orderDetail) {
+
+        Product productBefore = productMapper.selectById(orderDetail.getProductId());
+
+        //扣减库存
+        int computeStock = productBefore.getProductStock() - orderDetail.getBuyNumber();
+        if (computeStock < 0){
+
+            //删除已生成订单
+            int delete = ordersMapper.deleteById(orderDetail.getOrderId());
+            if (delete == 1){
+                return new ResultVO(StatusCode.NO, "库存不足！", null);
+            }else {
+                return new ResultVO(StatusCode.NO, "订单异常！", null);
+            }
+        }
+
         int insert = orderDetailMapper.insert(orderDetail);
         if (insert == 1) {
-            Product productBefore = productMapper.selectById(orderDetail.getProductId());
-
-            //扣减库存
             Product product = new Product();
             product.setProductId(productBefore.getProductId());
-            product.setProductStock(productBefore.getProductStock() - orderDetail.getBuyNumber());
+            product.setProductStock(computeStock);
             productMapper.updateById(product);
-
-            return new ResultVO(StatusCode.OK, "添加成功！", null);
+            return new ResultVO(StatusCode.OK, "提交成功！", null);
         } else {
-            return new ResultVO(StatusCode.NO, "添加失败！", null);
+            return new ResultVO(StatusCode.NO, "提交失败！", null);
         }
     }
 }

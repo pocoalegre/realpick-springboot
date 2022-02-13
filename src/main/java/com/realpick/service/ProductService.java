@@ -33,7 +33,7 @@ public interface ProductService extends IService<Product> {
     ResultVO productIndexList();
 
     //商品分类展示
-    ResultVO productListByCategory(Integer pageNum, Integer pageSize);
+    ResultVO productListByCategory(Integer pageNum, Integer pageSize, Integer categoryId);
 
     //商品VO
     ResultVO productVOById(Integer id);

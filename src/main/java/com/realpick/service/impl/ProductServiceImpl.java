@@ -171,19 +171,37 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     }
 
     @Override
-    public ResultVO productListByCategory(Integer pageNum, Integer pageSize) {
+    public ResultVO productListByCategory(Integer pageNum, Integer pageSize, Integer categoryId) {
 
         //分页设置
         PageHelper.startPage(pageNum, pageSize);
 
-        //查询列表并分页
-        try {
-            List<Product> productList = productMapper.selectList(null);
-            PageInfo<Product> productPageInfo = new PageInfo<>(productList);
-            return new ResultVO(StatusCode.OK, "获取列表成功！", productPageInfo);
-        } catch (Exception e) {
-            System.out.println(e);
-            return new ResultVO(StatusCode.NO, "获取列表失败！", null);
+        if (categoryId == 0){
+
+            //查询列表并分页
+            try {
+                List<Product> productList = productMapper.selectList(null);
+                PageInfo<Product> productPageInfo = new PageInfo<>(productList);
+                return new ResultVO(StatusCode.OK, "获取列表成功！", productPageInfo);
+            } catch (Exception e) {
+                System.out.println(e);
+                return new ResultVO(StatusCode.NO, "获取列表失败！", null);
+            }
+        }else {
+
+            //查询条件封装
+            QueryWrapper<Product> qw = new QueryWrapper<>();
+            qw.eq("category_id", categoryId);
+
+            //查询列表并分页
+            try {
+                List<Product> productList = productMapper.selectList(qw);
+                PageInfo<Product> productPageInfo = new PageInfo<>(productList);
+                return new ResultVO(StatusCode.OK, "获取列表成功！", productPageInfo);
+            } catch (Exception e) {
+                System.out.println(e);
+                return new ResultVO(StatusCode.NO, "获取列表失败！", null);
+            }
         }
     }
 
