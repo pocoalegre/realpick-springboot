@@ -266,4 +266,17 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
             return new ResultVO(StatusCode.NO, "修改头像失败！", null);
         }
     }
+
+    @Override
+    public ResultVO userCount() {
+        try {
+            //查询所有用户
+            List<Users> userList = usersMapper.selectList(null);
+            int count = userList.size();
+            return new ResultVO(StatusCode.OK, "获取用户数成功！", count);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取用户数失败！", null);
+        }
+    }
 }

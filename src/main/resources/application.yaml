@@ -29,3 +29,13 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
   helper-dialect: mysql
+
+# access log
+server:
+  port: 8080
+  # 配置access日志
+  tomcat:
+    accesslog:
+      enabled: true
+      pattern: common
+    basedir: C:\Software\Idea\logs\access_log

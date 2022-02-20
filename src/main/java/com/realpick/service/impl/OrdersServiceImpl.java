@@ -233,4 +233,49 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
         order.setActualAmount(actualAmount);
         ordersMapper.updateById(order);
     }
+
+    @Override
+    public ResultVO orderCount() {
+
+        //查询条件封装
+        QueryWrapper<Orders> qw = new QueryWrapper<>();
+
+        //查询条件
+        qw.eq("status", 4);
+
+        try {
+            List<Orders> orderList = ordersMapper.selectList(qw);
+
+            //统计成交量
+            int count = orderList.size();
+            return new ResultVO(StatusCode.OK, "获取成交量成功！", count);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取成交量失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO saleAmount() {
+
+        //查询条件封装
+        QueryWrapper<Orders> qw = new QueryWrapper<>();
+
+        //查询条件
+        qw.eq("status", 4);
+
+        try {
+            List<Orders> orderList = ordersMapper.selectList(qw);
+
+            //统计总金额
+            BigDecimal saleAmount = new BigDecimal(0);
+            for (Orders order : orderList) {
+                saleAmount.add(order.getActualAmount());
+            }
+            return new ResultVO(StatusCode.OK, "获取销售额成功！", saleAmount);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取销售额失败！", null);
+        }
+    }
 }

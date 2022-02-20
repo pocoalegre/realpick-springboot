@@ -42,4 +42,7 @@ public interface UsersService extends IService<Users> {
     //修改头像
     ResultVO userImgModify(Integer id, String imgName);
 
+    //查询用户总数
+    ResultVO userCount();
+
 }
