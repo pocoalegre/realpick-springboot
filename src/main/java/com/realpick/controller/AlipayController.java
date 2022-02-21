@@ -7,6 +7,7 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.realpick.config.AlipayConfig;
 import com.realpick.entity.AlipayVO;
 import com.realpick.service.OrdersService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/pay")
+@Api(value = "支付操作接口", tags = "支付管理")
 @CrossOrigin
 public class AlipayController {
 
