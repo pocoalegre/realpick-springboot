@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.realpick.vo.ResultVO;
 import org.apache.ibatis.io.ResolverUtil;
 
+import java.util.List;
+
 /**
  * <p>
  * 购物车 服务类
@@ -27,7 +29,7 @@ public interface ShoppingCartService extends IService<ShoppingCart> {
     //购物车查询
     ResultVO ShoppingCartVOList(Integer pageNum, Integer pageSize, Integer userId);
 
-    //清空购物车
-    ResultVO deleteAllShoppingCart(Integer id);
+    //删除购物车
+    ResultVO deleteShoppingCartByUser(List<Integer> idList);
 
 }

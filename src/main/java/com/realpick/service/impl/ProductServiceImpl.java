@@ -161,6 +161,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             //前10个
             QueryWrapper<Product> qw = new QueryWrapper<>();
             qw.last("limit 10");
+            qw.orderByDesc("product_sales");
 
             List<Product> productList = productMapper.selectList(qw);
             return new ResultVO(StatusCode.OK, "获取列表成功！", productList);
@@ -178,9 +179,13 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
         if (categoryId == 0){
 
+            //查询条件封装
+            QueryWrapper<Product> qw = new QueryWrapper<>();
+            qw.orderByDesc("product_sales");
+
             //查询列表并分页
             try {
-                List<Product> productList = productMapper.selectList(null);
+                List<Product> productList = productMapper.selectList(qw);
                 PageInfo<Product> productPageInfo = new PageInfo<>(productList);
                 return new ResultVO(StatusCode.OK, "获取列表成功！", productPageInfo);
             } catch (Exception e) {
@@ -192,6 +197,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             //查询条件封装
             QueryWrapper<Product> qw = new QueryWrapper<>();
             qw.eq("category_id", categoryId);
+            qw.orderByDesc("product_sales");
 
             //查询列表并分页
             try {

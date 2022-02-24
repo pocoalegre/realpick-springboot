@@ -109,16 +109,11 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
     }
 
     @Override
-    public ResultVO deleteAllShoppingCart(Integer id) {
+    public ResultVO deleteShoppingCartByUser(List<Integer> idList) {
 
-        //查询当前用户所有购物车
-        HashMap<String, Object> columnMap = new HashMap<>();
-        columnMap.put("user_id", id);
-
-        //清空购物车
-        List<ShoppingCart> shoppingCartList = shoppingCartMapper.selectByMap(columnMap);
-        for (ShoppingCart shoppingCart : shoppingCartList) {
-            int delete = shoppingCartMapper.deleteById(shoppingCart.getCartId());
+        //删除购物车
+        for (Integer id : idList) {
+            int delete = shoppingCartMapper.deleteById(id);
             if (delete != 1) {
                 return new ResultVO(StatusCode.NO, "购物车未知错误！", null);
             }

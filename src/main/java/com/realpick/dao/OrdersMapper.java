@@ -22,4 +22,10 @@ public interface OrdersMapper extends BaseMapper<Orders> {
     //根据用户查询订单VO
     List<OrderVO> orderVO(Integer userId);
 
+//    //月度销量统计
+//    Object monthSalesCount();
+//
+//    //类型销售前五统计
+//    Object salesFirstFiveCount();
+
 }

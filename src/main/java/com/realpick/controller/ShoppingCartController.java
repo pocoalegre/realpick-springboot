@@ -1,6 +1,9 @@
 package com.realpick.controller;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.realpick.entity.Banner;
 import com.realpick.entity.ShoppingCart;
 import com.realpick.service.ShoppingCartService;
 import com.realpick.vo.ResultVO;
@@ -8,9 +11,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p>
@@ -69,13 +79,21 @@ public class ShoppingCartController {
         return shoppingCartService.ShoppingCartVOList(pageNum, pageSize, userId);
     }
 
-    @ApiOperation("清空接口")
+    @ApiOperation("用户删除接口")
     @ApiImplicitParams({
-            @ApiImplicitParam(dataType = "int", name = "userId", value = "用户id", required = true)
+            @ApiImplicitParam(dataType = "string", name = "idList", value = "id字符串", required = true)
     })
-    @DeleteMapping("/deleteAll")
-    public ResultVO deleteAll(@RequestParam("userId") Integer userId) {
-        return shoppingCartService.deleteAllShoppingCart(userId);
+    @DeleteMapping("/deleteByUser")
+    public ResultVO deleteByUser(@RequestParam("idList") String idList) {
+
+        //字符串数组转换
+        String[] idListString = idList.split(",");
+        List<Integer> idArrayList = new ArrayList<>();
+        for (String id : idListString) {
+            idArrayList.add(Integer.parseInt(id));
+        }
+
+        return shoppingCartService.deleteShoppingCartByUser(idArrayList);
     }
 
 }

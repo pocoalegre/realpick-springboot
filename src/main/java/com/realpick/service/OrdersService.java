@@ -47,4 +47,10 @@ public interface OrdersService extends IService<Orders> {
     //统计销售额
     ResultVO saleAmount();
 
+//    //月度销量统计
+//    ResultVO monthSalesCount();
+//
+//    //类型销售前五统计
+//    ResultVO salesFirstFiveCount();
+
 }

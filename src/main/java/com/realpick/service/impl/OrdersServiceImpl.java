@@ -227,6 +227,19 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
         //设置付款完成
         List<Orders> ordersList = ordersMapper.selectByMap(map);
         Orders order = ordersList.get(0);
+
+        //设置商品销量
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("order_id", order.getOrderId());
+        List<OrderDetail> orderDetailList = orderDetailMapper.selectByMap(map1);
+        Integer productId = orderDetailList.get(0).getProductId();
+        Integer buyNumber = orderDetailList.get(0).getBuyNumber();
+        Product product = productMapper.selectById(productId);
+        Product productModify = new Product();
+        productModify.setProductId(productId);
+        productModify.setProductSales(product.getProductSales() + buyNumber);
+        productMapper.updateById(productModify);
+
         order.setStatus(2);
         order.setPayType(1);
         order.setPayTime(new Date());
@@ -270,7 +283,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
             //统计总金额
             BigDecimal saleAmount = new BigDecimal(0);
             for (Orders order : orderList) {
-                saleAmount.add(order.getActualAmount());
+                saleAmount = saleAmount.add(order.getActualAmount());
             }
             return new ResultVO(StatusCode.OK, "获取销售额成功！", saleAmount);
         } catch (Exception e) {
@@ -278,4 +291,14 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
             return new ResultVO(StatusCode.NO, "获取销售额失败！", null);
         }
     }
+
+//    @Override
+//    public ResultVO monthSalesCount() {
+//        return null;
+//    }
+//
+//    @Override
+//    public ResultVO salesFirstFiveCount() {
+//        return null;
+//    }
 }
