@@ -241,17 +241,17 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
         QueryWrapper<Orders> qw = new QueryWrapper<>();
 
         //查询条件
-        qw.eq("status", 4);
+        qw.ne("status", 0);
 
         try {
             List<Orders> orderList = ordersMapper.selectList(qw);
 
-            //统计成交量
+            //统计订单量
             int count = orderList.size();
-            return new ResultVO(StatusCode.OK, "获取成交量成功！", count);
+            return new ResultVO(StatusCode.OK, "获取订单量成功！", count);
         } catch (Exception e) {
             System.out.println(e);
-            return new ResultVO(StatusCode.NO, "获取成交量失败！", null);
+            return new ResultVO(StatusCode.NO, "获取订单量失败！", null);
         }
     }
 

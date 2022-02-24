@@ -33,7 +33,7 @@ public class DashboradController {
         return usersService.userCount();
     }
 
-    @ApiOperation("获取成交量接口")
+    @ApiOperation("获取订单量接口")
     @GetMapping("/orderCount")
     public ResultVO orderCount() {
         return ordersService.orderCount();

@@ -41,10 +41,10 @@ public interface OrdersService extends IService<Orders> {
     //付款成功
     void paySuccess(String orderNumber, String total_amount);
 
-    //统计完成订单
+    //统计订单量
     ResultVO orderCount();
 
-    //统计完成订单销售额
+    //统计销售额
     ResultVO saleAmount();
 
 }
