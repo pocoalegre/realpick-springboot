@@ -56,8 +56,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
         excludePath.add("/pay/notify");
 
         //设置拦截规则
-//        registry.addInterceptor(checkToeknInterceptor)
-//                .addPathPatterns(addPath)
-//                .excludePathPatterns(excludePath);
+        registry.addInterceptor(checkToeknInterceptor)
+                .addPathPatterns(addPath)
+                .excludePathPatterns(excludePath);
     }
 }
