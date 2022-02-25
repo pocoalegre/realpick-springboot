@@ -292,13 +292,39 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
         }
     }
 
-//    @Override
-//    public ResultVO monthSalesCount() {
-//        return null;
-//    }
-//
-//    @Override
-//    public ResultVO salesFirstFiveCount() {
-//        return null;
-//    }
+    @Override
+    public ResultVO monthSalesCount() {
+        try {
+
+            //数据横向转换
+            List<Map<Object, Object>> maps = ordersMapper.monthSalesCount();
+            List<List> salesCount = new ArrayList<>();
+            List<String> monthList = new ArrayList<>();
+            List<Integer> countList = new ArrayList<>();
+            for (Map<Object, Object> map : maps) {
+                String t_month = map.get("t_month") + "月";
+                monthList.add(t_month);
+                countList.add(Integer.parseInt(map.get("t_sales").toString()));
+            }
+
+            //添加list
+            salesCount.add(monthList);
+            salesCount.add(countList);
+            return new ResultVO(StatusCode.OK, "获取月度销量统计成功！", salesCount);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取月度销量统计失败！", null);
+        }
+    }
+
+    @Override
+    public ResultVO salesFiveCount() {
+        try {
+            List<Map<Object, Object>> maps = ordersMapper.salesFiveCount();
+            return new ResultVO(StatusCode.OK, "获取类型销售前五统计成功！", maps);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResultVO(StatusCode.NO, "获取类型销售前五统计失败！", null);
+        }
+    }
 }

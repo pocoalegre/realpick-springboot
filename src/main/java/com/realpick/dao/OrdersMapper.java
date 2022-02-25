@@ -6,6 +6,7 @@ import com.realpick.entity.Orders;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -22,10 +23,10 @@ public interface OrdersMapper extends BaseMapper<Orders> {
     //根据用户查询订单VO
     List<OrderVO> orderVO(Integer userId);
 
-//    //月度销量统计
-//    Object monthSalesCount();
-//
-//    //类型销售前五统计
-//    Object salesFirstFiveCount();
+    //月度销量统计
+    List<Map<Object, Object>> monthSalesCount();
+
+    //类型销售前五统计
+    List<Map<Object, Object>> salesFiveCount();
 
 }
