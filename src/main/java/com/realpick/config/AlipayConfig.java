@@ -27,7 +27,7 @@ public class AlipayConfig {
     public static final String SIGN_TYPE = "RSA2";
 
     //支付宝异步通知路径,付款完毕后服务器异步通知页面路径,必须为公网地址
-    public static final String NOTIFY_URL = "http://ktaqvq.natappfree.cc/pay/notify";
+    public static final String NOTIFY_URL = "http://ybvz8j.natappfree.cc/pay/notify";
 
     //支付宝同步通知路径,付款完毕后服务器同步通知页面路径,可以不是公网地址
     public static final String RETURN_URL = "http://localhost:8181/userOrder";

@@ -162,6 +162,13 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
                 Users user = new Users();
                 user.setUserId(id);
                 user.setUserPwd(md5Pwd);
+
+                //性别年龄电话邮箱
+                Users byId = usersMapper.selectById(id);
+                user.setUserGender(byId.getUserGender());
+                user.setUserAge(byId.getUserAge());
+                user.setUserTel(byId.getUserTel());
+                user.setUserEmail(byId.getUserEmail());
                 int update = usersMapper.updateById(user);
                 if (update == 1) {
                     return new ResultVO(StatusCode.OK, "修改成功，请重新登录！", null);
@@ -187,6 +194,13 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
             Users user = new Users();
             user.setUserId(id);
             user.setUserPwd(md5Pwd);
+
+            //性别年龄电话邮箱
+            Users byId = usersMapper.selectById(id);
+            user.setUserGender(byId.getUserGender());
+            user.setUserAge(byId.getUserAge());
+            user.setUserTel(byId.getUserTel());
+            user.setUserEmail(byId.getUserEmail());
             int update = usersMapper.updateById(user);
             if (update == 1) {
                 return new ResultVO(StatusCode.OK, "修改成功！", null);
