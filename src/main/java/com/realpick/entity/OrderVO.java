@@ -31,6 +31,6 @@ public class OrderVO {
     private Date createTime;
     private Date updateTime;
 
-    //订单明细
+    //订单详情
     private OrderDetail orderDetail;
 }
