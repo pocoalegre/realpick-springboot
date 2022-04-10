@@ -1,22 +1,19 @@
 package com.realpick.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.api.R;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.realpick.dao.ProductMapper;
+import com.realpick.dao.ProductSkuMapper;
 import com.realpick.entity.Product;
 import com.realpick.entity.ProductSku;
-import com.realpick.dao.ProductSkuMapper;
-import com.realpick.entity.ProductSkuVO;
 import com.realpick.service.ProductSkuService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.realpick.vo.ResultVO;
 import com.realpick.vo.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -196,13 +193,13 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
     }
 
     @Override
-    public ResultVO selectIdByThree(ProductSkuVO productSkuVO) {
+    public ResultVO selectIdByThree(Integer productId, String skuSize, String skuColor) {
 
         //查询条件
         Map<String, Object> columnMap = new HashMap<>();
-        columnMap.put("product_id", productSkuVO.getProductId());
-        columnMap.put("sku_size", productSkuVO.getSkuSize());
-        columnMap.put("sku_color", productSkuVO.getSkuColor());
+        columnMap.put("product_id", productId);
+        columnMap.put("sku_size", skuSize);
+        columnMap.put("sku_color", skuColor);
 
         try {
             Integer skuId = productSkuMapper.selectByMap(columnMap).get(0).getSkuId();

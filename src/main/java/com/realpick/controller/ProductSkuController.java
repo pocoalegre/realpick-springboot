@@ -1,20 +1,15 @@
 package com.realpick.controller;
 
 
-import com.alibaba.fastjson.JSON;
 import com.realpick.entity.ProductSku;
-import com.realpick.entity.ProductSkuVO;
 import com.realpick.service.ProductSkuService;
-import com.realpick.utils.FileManage;
 import com.realpick.vo.ResultVO;
-import com.realpick.vo.StatusCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -128,8 +123,15 @@ public class ProductSkuController {
 
     @ApiOperation("查询id接口")
     @PostMapping("/selectId")
-    public ResultVO selectId(@RequestBody ProductSkuVO productSkuVO) {
-        return productSkuService.selectIdByThree(productSkuVO);
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "productId", value = "商品id", required = true),
+            @ApiImplicitParam(dataType = "string", name = "skuSize", value = "sku尺寸", required = true),
+            @ApiImplicitParam(dataType = "string", name = "skuColor", value = "sku颜色", required = true)
+    })
+    public ResultVO selectId(@RequestParam("productId") Integer productId,
+                             @RequestParam("skuSize") String skuSize,
+                             @RequestParam("skuColor") String skuColor) {
+        return productSkuService.selectIdByThree(productId, skuSize, skuColor);
     }
 }
 
