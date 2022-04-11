@@ -121,7 +121,7 @@ public class UsersController {
     @ApiOperation("修改密码接口")
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "int", name = "id", value = "用户id", required = true),
-            @ApiImplicitParam(dataType = "string", name = "pwd", value = "用户输入密码", required = true),
+            @ApiImplicitParam(dataType = "string", name = "pwd", value = "输入密码", required = true),
             @ApiImplicitParam(dataType = "string", name = "newPwd", value = "修改后密码", required = true)
     })
     @PutMapping("/pwdModify")

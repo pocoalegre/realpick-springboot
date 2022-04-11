@@ -30,6 +30,6 @@ public interface ShoppingCartService extends IService<ShoppingCart> {
     ResultVO ShoppingCartVOList(Integer pageNum, Integer pageSize, Integer userId);
 
     //删除购物车
-    ResultVO deleteShoppingCartByUser(List<Integer> idList);
+    ResultVO deleteShoppingCartByOrder(List<Integer> idList);
 
 }

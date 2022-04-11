@@ -31,7 +31,7 @@ public class ProductParamController {
 
     @ApiOperation("条件查询分页列表接口")
     @ApiImplicitParams({
-            @ApiImplicitParam(dataType = "string", name = "queryProductId", value = "商品编号"),
+            @ApiImplicitParam(dataType = "string", name = "queryProductId", value = "商品id"),
             @ApiImplicitParam(dataType = "int", name = "pageNum", value = "页码", required = true),
             @ApiImplicitParam(dataType = "int", name = "pageSize", value = "当前页码数据条数", required = true)
     })
@@ -53,7 +53,7 @@ public class ProductParamController {
 
     @ApiOperation("删除接口")
     @ApiImplicitParams({
-            @ApiImplicitParam(dataType = "int", name = "id", value = "商品id", required = true)
+            @ApiImplicitParam(dataType = "int", name = "id", value = "商品参数id", required = true)
     })
     @DeleteMapping("/delete")
     public ResultVO delete(@RequestParam("id") Integer id) {

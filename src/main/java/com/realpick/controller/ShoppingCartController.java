@@ -71,12 +71,12 @@ public class ShoppingCartController {
         return shoppingCartService.ShoppingCartVOList(pageNum, pageSize, userId);
     }
 
-    @ApiOperation("用户删除接口")
+    @ApiOperation("提交订单删除接口")
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "string", name = "idList", value = "id字符串", required = true)
     })
-    @DeleteMapping("/deleteByUser")
-    public ResultVO deleteByUser(@RequestParam("idList") String idList) {
+    @DeleteMapping("/deleteByOrder")
+    public ResultVO deleteByOrder(@RequestParam("idList") String idList) {
 
         //字符串数组转换
         String[] idListString = idList.split(",");
@@ -85,7 +85,7 @@ public class ShoppingCartController {
             idArrayList.add(Integer.parseInt(id));
         }
 
-        return shoppingCartService.deleteShoppingCartByUser(idArrayList);
+        return shoppingCartService.deleteShoppingCartByOrder(idArrayList);
     }
 
 }

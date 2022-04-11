@@ -105,17 +105,5 @@ public class OrdersController {
         return ordersService.confirmOrder(id);
     }
 
-    @ApiOperation("月度销量接口")
-    @GetMapping("/monthSalesCount")
-    public ResultVO monthSalesCount() {
-        return ordersService.monthSalesCount();
-    }
-
-    @ApiOperation("类型销售前五接口")
-    @GetMapping("/salesFiveCount")
-    public ResultVO salesFiveCount() {
-        return ordersService.salesFiveCount();
-    }
-
 }
 

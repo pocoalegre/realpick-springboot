@@ -18,12 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/pay")
 @Api(value = "支付操作接口", tags = "支付管理")
 @CrossOrigin
-public class AlipayController {
+public class PayController {
 
     @Autowired
     private OrdersService ordersService;
 
-    @ApiOperation("支付接口")
+    @ApiOperation("支付宝支付接口")
     @PostMapping("/alipay")
     public String alipay(@RequestBody AlipayVO alipayVO) throws AlipayApiException {
 
@@ -56,6 +56,7 @@ public class AlipayController {
         return result;
     }
 
+    @ApiOperation("支付宝异步响应")
     @PostMapping("/notify")
     public void notify(HttpServletRequest request) throws Exception {
 

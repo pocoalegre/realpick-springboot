@@ -61,4 +61,16 @@ public class DashboradController {
             return new ResultVO(StatusCode.NO, "获取浏览量失败！", null);
         }
     }
+
+    @ApiOperation("获取月度销量接口")
+    @GetMapping("/monthSalesCount")
+    public ResultVO monthSalesCount() {
+        return ordersService.monthSalesCount();
+    }
+
+    @ApiOperation("获取类型销售前五接口")
+    @GetMapping("/salesFiveCount")
+    public ResultVO salesFiveCount() {
+        return ordersService.salesFiveCount();
+    }
 }

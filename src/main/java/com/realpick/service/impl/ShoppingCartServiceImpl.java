@@ -109,7 +109,7 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
     }
 
     @Override
-    public ResultVO deleteShoppingCartByUser(List<Integer> idList) {
+    public ResultVO deleteShoppingCartByOrder(List<Integer> idList) {
 
         //删除购物车
         for (Integer id : idList) {

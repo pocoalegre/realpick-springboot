@@ -127,7 +127,7 @@ public class ProductController {
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "int", name = "pageNum", value = "页码", required = true),
             @ApiImplicitParam(dataType = "int", name = "pageSize", value = "当前页码数据条数", required = true),
-            @ApiImplicitParam(dataType = "int", name = "categoryId", value = "当前页码数据条数", required = true)
+            @ApiImplicitParam(dataType = "int", name = "categoryId", value = "商品类型id", required = true)
     })
     public ResultVO listByCategory(@RequestParam("pageNum") Integer pageNum,
                                    @RequestParam("pageSize") Integer pageSize,

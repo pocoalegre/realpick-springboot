@@ -121,8 +121,8 @@ public class AdminsController {
     @ApiOperation("修改密码接口")
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "int", name = "id", value = "管理员id", required = true),
-            @ApiImplicitParam(dataType = "string", name = "pwd", value = "管理员输入密码", required = true),
-            @ApiImplicitParam(dataType = "string", name = "newPwd", value = "管理员修改后密码", required = true)
+            @ApiImplicitParam(dataType = "string", name = "pwd", value = "输入密码", required = true),
+            @ApiImplicitParam(dataType = "string", name = "newPwd", value = "修改后密码", required = true)
     })
     @PutMapping("/pwdModify")
     public ResultVO pwdModify(@RequestParam("id") Integer id,
