@@ -31,7 +31,7 @@ public class OrderDetailController {
 
     @ApiOperation("条件查询分页列表接口")
     @ApiImplicitParams({
-            @ApiImplicitParam(dataType = "string", name = "queryOrderId", value = "订单编号"),
+            @ApiImplicitParam(dataType = "string", name = "queryOrderId", value = "订单id"),
             @ApiImplicitParam(dataType = "int", name = "pageNum", value = "页码", required = true),
             @ApiImplicitParam(dataType = "int", name = "pageSize", value = "当前页码数据条数", required = true)
     })

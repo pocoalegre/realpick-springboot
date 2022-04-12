@@ -73,7 +73,7 @@ public class ShoppingCartController {
 
     @ApiOperation("提交订单删除接口")
     @ApiImplicitParams({
-            @ApiImplicitParam(dataType = "string", name = "idList", value = "id字符串", required = true)
+            @ApiImplicitParam(dataType = "string", name = "idList", value = "id列表字符串", required = true)
     })
     @DeleteMapping("/deleteByOrder")
     public ResultVO deleteByOrder(@RequestParam("idList") String idList) {
