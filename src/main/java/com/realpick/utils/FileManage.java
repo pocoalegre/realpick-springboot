@@ -42,10 +42,8 @@ public class FileManage {
             //图片项目路径
             String targetPath = ClassUtils.getDefaultClassLoader().getResource(fileDir).getPath();
 
-            //判断是否为图片格式
+            //获取文件名重命名
             String fileRealName = file.getOriginalFilename();
-
-            //是图片，则重命名
             String fileRename = FileManage.fileRename(fileRealName);
 
             //完整路径
