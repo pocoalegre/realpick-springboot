@@ -91,7 +91,7 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
                 HashMap<Object, Object> returnMap = new HashMap<>();
                 returnMap.put("admin", adminList.get(0));
                 returnMap.put("token", token);
-                return new ResultVO(StatusCode.OK, "登陆成功！", returnMap);
+                return new ResultVO(StatusCode.OK, "登录成功！", returnMap);
             } else {
                 return new ResultVO(StatusCode.NO, "密码错误！", null);
             }

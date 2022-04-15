@@ -92,7 +92,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
                 HashMap<Object, Object> returnMap = new HashMap<>();
                 returnMap.put("user", userList.get(0));
                 returnMap.put("token", token);
-                return new ResultVO(StatusCode.OK, "登陆成功！", returnMap);
+                return new ResultVO(StatusCode.OK, "登录成功！", returnMap);
             } else {
                 return new ResultVO(StatusCode.NO, "密码错误！", null);
             }
